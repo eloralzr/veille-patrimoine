@@ -12,10 +12,22 @@ from supabase import Client, create_client
 
 @st.cache_resource(show_spinner=False)
 def get_client() -> Client:
-    url = st.secrets["SUPABASE_URL"]
-    key = st.secrets["SUPABASE_KEY"]
+    url = str(st.secrets.get("SUPABASE_URL", "")).strip()
+    key = str(st.secrets.get("SUPABASE_KEY", "")).strip()
+    problemes = []
+    if not url.startswith("https://") or not url.endswith(".supabase.co"):
+        problemes.append("SUPABASE_URL doit être de la forme https://xxxx.supabase.co")
+    if not key.startswith(("eyJ", "sb_secret_")):
+        problemes.append("SUPABASE_KEY ne ressemble pas à une clé Supabase (doit commencer par eyJ ou sb_secret_)")
+    for nom, val in (("SUPABASE_URL", url), ("SUPABASE_KEY", key)):
+        mauvais = [c for c in val if ord(c) > 127]
+        if mauvais:
+            problemes.append(f"{nom} contient des caractères non autorisés : {''.join(sorted(set(mauvais)))}")
+    if problemes:
+        st.error("Configuration des secrets incorrecte :\n\n- " + "\n- ".join(problemes)
+                 + "\n\nCorrigez dans Streamlit Cloud > Settings > Secrets, puis Save.")
+        st.stop()
     return create_client(url, key)
-
 
 # ---------- Référentiel ----------
 
