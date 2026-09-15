@@ -1,0 +1,39 @@
+acteur_id,nom,type,organisation,camp,statut,date_statut,priorite,frequence_veille,site_officiel,url_programme,notes,actif,maj_par,maj_le
+le-pen-marine,Marine Le Pen,candidat,Rassemblement national,droite_nationale,declare,2026-07-07,P1,quotidien,,,Déclarée au 20h de TF1 ; pourvoi en cassation en cours (éligibilité),true,Elora Lazaar,2026-09-14
+philippe-edouard,Édouard Philippe,candidat,Horizons,centre,declare,2024-09-03,P1,quotidien,,,Déclaré dès septembre 2024,true,Elora Lazaar,2026-09-14
+attal-gabriel,Gabriel Attal,candidat,Renaissance,centre,declare,2026-05-22,P1,quotidien,,,,true,Elora Lazaar,2026-09-14
+retailleau-bruno,Bruno Retailleau,candidat,Les Républicains,droite,investi,2026-04-19,P1,quotidien,,,"Investi par les adhérents LR (73,8 %)",true,Elora Lazaar,2026-09-14
+melenchon-jean-luc,Jean-Luc Mélenchon,candidat,La France insoumise,gauche,declare,2026-05-31,P1,quotidien,,,4e candidature ; date de confirmation fin mai 2026 à préciser,true,Elora Lazaar,2026-09-14
+glucksmann-raphael,Raphaël Glucksmann,candidat,Place publique,gauche,primaire,,P1,quotidien,,,Candidat à la primaire PS / Place publique / GRS,true,Elora Lazaar,2026-09-14
+bertrand-xavier,Xavier Bertrand,candidat,Nous France,droite,a_confirmer,,P2,hebdo,,,Statut validé par E. Lazaar le 2026-09-14 ; source presse à joindre,true,Elora Lazaar,2026-09-14
+lisnard-david,David Lisnard,candidat,Nouvelle Énergie,droite,declare,,P2,hebdo,,,A quitté LR en avril 2026,true,Elora Lazaar,2026-09-14
+roussel-fabien,Fabien Roussel,candidat,Parti communiste français,gauche,investi,2026-09-06,P2,hebdo,,,Candidature validée par les adhérents PCF (72 %),true,Elora Lazaar,2026-09-14
+tondelier-marine,Marine Tondelier,candidat,Les Écologistes,ecologiste,declare,,P2,hebdo,,,,true,Elora Lazaar,2026-09-14
+faure-olivier,Olivier Faure,candidat,Parti socialiste,gauche,primaire,,P2,hebdo,,,Candidat à la primaire PS,true,Elora Lazaar,2026-09-14
+guedj-jerome,Jérôme Guedj,candidat,Parti socialiste,gauche,primaire,2026-02-05,P2,hebdo,,,"Déclaré le 5 fév. 2026, a rejoint la primaire PS en août",true,Elora Lazaar,2026-09-14
+bouamrane-karim,Karim Bouamrane,candidat,Parti socialiste,gauche,declare,2026-06-09,P2,hebdo,,,Maire de Saint-Ouen ; positionnement vis-à-vis de la primaire à suivre,true,Elora Lazaar,2026-09-14
+royal-segolene,Ségolène Royal,candidat,Sans étiquette (ex-PS),gauche,primaire,2026-07-10,P2,hebdo,,,Candidate à la primaire PS,true,Elora Lazaar,2026-09-14
+brun-philippe,Philippe Brun,candidat,Parti socialiste,gauche,primaire,,P2,hebdo,,,"Député ; candidat à la primaire PS, ligne salaires",true,Elora Lazaar,2026-09-14
+ruffin-francois,François Ruffin,candidat,Debout !,gauche,declare,,P2,hebdo,,,"Maintien annoncé, primaire ou non",true,Elora Lazaar,2026-09-14
+dupont-aignan-nicolas,Nicolas Dupont-Aignan,candidat,Debout la France,souverainiste,declare,,P3,mensuel,,,,true,Elora Lazaar,2026-09-14
+philippot-florian,Florian Philippot,candidat,Les Patriotes,souverainiste,declare,,P3,mensuel,,,,true,Elora Lazaar,2026-09-14
+asselineau-francois,François Asselineau,candidat,Union populaire républicaine,souverainiste,declare,,P3,mensuel,,,,true,Elora Lazaar,2026-09-14
+batho-delphine,Delphine Batho,candidat,Génération écologie,ecologiste,declare,,P3,mensuel,,,,true,Elora Lazaar,2026-09-14
+arthaud-nathalie,Nathalie Arthaud,candidat,Lutte ouvrière,extreme_gauche,declare,,P3,mensuel,,,4e candidature,true,Elora Lazaar,2026-09-14
+kazib-anasse,Anasse Kazib,candidat,Révolution permanente,extreme_gauche,declare,,P3,mensuel,,,,true,Elora Lazaar,2026-09-14
+labib-selma,Selma Labib,candidat,NPA-Révolutionnaires,extreme_gauche,declare,,P3,mensuel,,,,true,Elora Lazaar,2026-09-14
+branco-juan,Juan Branco,candidat,Les Ruches,gauche,declare,2025-12-19,P3,mensuel,,,,true,Elora Lazaar,2026-09-14
+egger-clara,Clara Egger,candidat,Solution démocratique,autre,declare,,P3,mensuel,,,Démocratie directe / RIC,true,Elora Lazaar,2026-09-14
+massard-lydie,Lydie Massard,candidat,Union démocratique bretonne,autre,a_confirmer,,P3,mensuel,,,Décision de maintien attendue en septembre 2026,true,Elora Lazaar,2026-09-14
+institut-montaigne,Institut Montaigne,think_tank,,na,na,,P1,hebdo,https://www.institutmontaigne.org/,,,true,Elora Lazaar,2026-09-14
+fondapol,Fondapol,think_tank,,na,na,,P1,hebdo,https://www.fondapol.org/,,,true,Elora Lazaar,2026-09-14
+terra-nova,Terra Nova,think_tank,,na,na,,P1,hebdo,https://tnova.fr/,,,true,Elora Lazaar,2026-09-14
+ofce,OFCE,think_tank,,na,na,,P1,hebdo,https://www.ofce.fr/,,Chiffrages de programmes en 2017 et 2022 ; blog séparé,true,Elora Lazaar,2026-09-14
+institut-choiseul,Institut Choiseul,think_tank,,na,na,,P2,hebdo,https://www.choiseul.info/,,,true,Elora Lazaar,2026-09-14
+croissance-plus,Croissance Plus,club,,na,na,,P2,hebdo,https://croissanceplus.com/,,,true,Elora Lazaar,2026-09-14
+medef,MEDEF,organisation,,na,na,,P1,hebdo,,,Site à renseigner,true,Elora Lazaar,2026-09-14
+cgt,CGT,organisation,,na,na,,P2,hebdo,,,Site à renseigner,true,Elora Lazaar,2026-09-14
+cfdt,CFDT,organisation,,na,na,,P2,hebdo,,,Site à renseigner,true,Elora Lazaar,2026-09-14
+fo,Force ouvrière,organisation,,na,na,,P2,hebdo,,,Site à renseigner,true,Elora Lazaar,2026-09-14
+assemblee-nationale,Assemblée nationale – commission des finances,institution,,na,na,,P1,hebdo,,,"Comptes rendus, propositions de loi, données ouvertes",true,Elora Lazaar,2026-09-14
+senat,Sénat – commission des finances,institution,,na,na,,P2,hebdo,,,Rapports et comptes rendus,true,Elora Lazaar,2026-09-14
