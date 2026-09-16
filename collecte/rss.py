@@ -80,7 +80,7 @@ def _texte_article(url: str) -> tuple[str, str | None]:
         try:
             import trafilatura
             txt = trafilatura.extract(r.text, include_comments=False, include_tables=False,
-                                      favor_precision=False, target_language="fr") or ""
+                                      favor_precision=False) or ""
         except Exception:
             txt = ""
         if not txt:  # repli grossier : texte des paragraphes

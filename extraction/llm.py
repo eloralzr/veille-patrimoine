@@ -55,9 +55,11 @@ def _gemini(systeme: str, utilisateur: str, modele: str) -> str:
         "contents": [{"role": "user", "parts": [{"text": utilisateur}]}],
         "generationConfig": {"temperature": 0.1, "responseMimeType": "application/json", "maxOutputTokens": 4096},
     }
-    r = requests.post(url, params={"key": _cle("GEMINI_API_KEY")}, json=body, timeout=TIMEOUT)
+    # clé transmise dans l'en-tête recommandé par Google (compatible anciens AIza… et nouveaux AQ.… formats)
+    r = requests.post(url, headers={"x-goog-api-key": _cle("GEMINI_API_KEY"), "Content-Type": "application/json"},
+                      json=body, timeout=TIMEOUT)
     if r.status_code != 200:
-        raise ErreurLLM(f"Gemini HTTP {r.status_code} : {r.text[:300]}")
+        raise ErreurLLM(f"Gemini HTTP {r.status_code} : {' '.join(r.text.split())[:600]}")
     data = r.json()
     try:
         return "".join(p.get("text", "") for p in data["candidates"][0]["content"]["parts"])
