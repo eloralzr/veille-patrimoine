@@ -47,7 +47,7 @@ LIB_STATUT = {"brut": "Brut", "verifie": "Vérifié", "publie": "Publié", "reti
 # ---------------------------------------------------------------- Menu
 with st.sidebar:
     st.markdown("### Veille programmes")
-    page = st.radio("Navigation", ["Tableau de bord", "Fiches", "Saisie", "Référentiel"], label_visibility="collapsed")
+    page = st.radio("Navigation", ["Tableau de bord", "Fiches", "Saisie", "File de collecte", "Référentiel"], label_visibility="collapsed")
     st.divider()
     utilisateur = st.text_input("Vos initiales", value=st.session_state.get("user", ""), max_chars=6,
                                 help="Utilisées pour tracer les saisies et validations.")
@@ -139,7 +139,8 @@ elif page == "Fiches":
                        "fiches.csv", "text/csv")
 
     for _, r in v.iterrows():
-        titre = f"{r['acteur_nom']} — {r['titre']}  ·  {r['sous_theme']}  ·  {r['nature_lib']}  ·  {r['statut_lib']}"
+        auto = "  ·  🤖 auto" if str(r.get("saisi_par") or "").startswith("auto:") else ""
+        titre = f"{r['acteur_nom']} — {r['titre']}  ·  {r['sous_theme']}  ·  {r['nature_lib']}  ·  {r['statut_lib']}{auto}"
         with st.expander(titre):
             st.write(r["resume"])
             if r.get("citation"):
@@ -239,6 +240,61 @@ elif page == "Saisie":
             '  "confiance": "eleve | moyen | incertain"\n'
             '}', language="json")
         st.markdown("**Identifiants d'acteurs disponibles :** " + ", ".join(f"`{a}`" for a in sorted(ACTEUR_IDS)))
+
+# ================================================================ File de collecte
+elif page == "File de collecte":
+    st.title("File de collecte")
+    st.caption("Collecte automatique des flux (GitHub Actions, chaque nuit) et extraction par le modèle configuré. "
+               "Les fiches produites arrivent en statut « Brut », marquées 🤖 auto.")
+
+    stats = db.stats_documents()
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("À traiter", stats["a_traiter"])
+    c2.metric("Traités", stats["traite"])
+    c3.metric("Ignorés", stats["ignore"])
+    c4.metric("En erreur", stats["erreur"])
+
+    st.subheader("Dernières exécutions")
+    runs = db.load_runs()
+    if runs:
+        dr = pd.DataFrame(runs)
+        dr["debut"] = pd.to_datetime(dr["debut"]).dt.tz_convert("Europe/Paris").dt.strftime("%d/%m %H:%M")
+        cols = ["debut", "fournisseur", "modele", "flux_lus", "docs_vus", "docs_nouveaux", "docs_extraits", "fiches_creees", "erreurs"]
+        st.dataframe(dr[cols].rename(columns={"debut": "Début", "fournisseur": "Fournisseur", "modele": "Modèle", "flux_lus": "Flux",
+                                              "docs_vus": "Vus", "docs_nouveaux": "Nouveaux", "docs_extraits": "Extraits",
+                                              "fiches_creees": "Fiches", "erreurs": "Erreurs"}),
+                     use_container_width=True, hide_index=True)
+        with st.expander("Journal de la dernière exécution"):
+            st.code(runs[0].get("journal") or "", language="text")
+    else:
+        st.info("Aucune exécution enregistrée. Lancez le workflow **Collecte et extraction quotidiennes** dans l'onglet Actions de GitHub (bouton *Run workflow*).")
+
+    st.subheader("Documents")
+    choix = st.multiselect("Statut", ["a_traiter", "erreur", "traite", "ignore"], default=["a_traiter", "erreur"])
+    docs = db.load_documents(choix) if choix else []
+    st.caption(f"{len(docs)} document(s)")
+    for d in docs:
+        entete = f"[{d['statut']}] {d.get('acteur_nom')} — {(d.get('titre') or d['url'])[:90]}"
+        if d.get("date_publication"):
+            entete += f"  ·  {d['date_publication']}"
+        if d.get("nb_fiches") is not None:
+            entete += f"  ·  {d['nb_fiches']} fiche(s)"
+        with st.expander(entete):
+            st.markdown(f"**Source :** [{d.get('url_finale') or d['url']}]({d.get('url_finale') or d['url']})  ·  type : {d.get('source_type')}")
+            if d.get("erreur"):
+                st.warning(d["erreur"])
+            b1, b2, b3, _ = st.columns([1, 1, 1, 4])
+            did = str(d["id"])
+            if d["statut"] != "a_traiter" and b1.button("Relancer l'extraction", key="rl" + did):
+                db.update_document_statut(did, "a_traiter"); st.rerun()
+            if d["statut"] != "ignore" and b2.button("Ignorer", key="ig" + did):
+                db.update_document_statut(did, "ignore"); st.rerun()
+            if b3.button("Copier pour Claude", key="cp" + did):
+                st.session_state["copie_" + did] = True
+            if st.session_state.get("copie_" + did):
+                st.code(f"ACTEUR : {d['acteur_id']}\nURL : {d.get('url_finale') or d['url']}\nDATE : {d.get('date_publication') or ''}\nTEXTE :\n{(d.get('texte') or '')[:6000]}",
+                        language="text")
+                st.caption("À coller dans le Projet Claude en secours, puis la fiche dans la page Saisie.")
 
 # ================================================================ Référentiel
 elif page == "Référentiel":
