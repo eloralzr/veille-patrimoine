@@ -29,6 +29,7 @@ def get_client() -> Client:
         st.stop()
     return create_client(url, key)
 
+
 # ---------- Référentiel ----------
 
 @st.cache_data(ttl=300, show_spinner=False)
@@ -83,3 +84,35 @@ def count_documents_a_traiter() -> int:
         .execute()
     )
     return res.count or 0
+
+
+# ---------- Collecte automatique ----------
+
+def load_runs(limit: int = 20) -> list[dict]:
+    res = get_client().table("collecte_runs").select("*").order("debut", desc=True).limit(limit).execute()
+    return res.data or []
+
+
+def stats_documents() -> dict:
+    out = {}
+    for statut in ("a_traiter", "traite", "ignore", "erreur"):
+        res = get_client().table("documents").select("id", count="exact").eq("statut", statut).execute()
+        out[statut] = res.count or 0
+    return out
+
+
+def load_documents(statuts: list[str], limit: int = 200) -> list[dict]:
+    res = (
+        get_client().table("documents")
+        .select("id, acteur_id, source_type, url, url_finale, titre, date_publication, statut, erreur, nb_fiches, cree_le, traite_le, texte, acteurs(nom)")
+        .in_("statut", statuts).order("cree_le", desc=True).limit(limit).execute()
+    )
+    rows = res.data or []
+    for r in rows:
+        a = r.pop("acteurs", None) or {}
+        r["acteur_nom"] = a.get("nom", r.get("acteur_id"))
+    return rows
+
+
+def update_document_statut(doc_id: str, statut: str) -> None:
+    get_client().table("documents").update({"statut": statut, "erreur": None}).eq("id", doc_id).execute()

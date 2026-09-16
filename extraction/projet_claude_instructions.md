@@ -71,7 +71,8 @@ Réponds **uniquement** avec du JSON, sans texte avant ni après, sans balises `
 6. **Citation** : verbatim, 25 mots maximum, jamais reformulée. Préfère une citation courte et exacte à une longue.
 7. **Impact client** : factuel et neutre (« augmenterait le coût de transmission d'un patrimoine de 1 M€ en ligne directe »), jamais une recommandation.
 8. **Acteur tiers cité dans le texte** : si un article sur le candidat A rapporte la réaction du syndicat B, produis une fiche pour A (sa mesure) et une pour B (`reaction`), chacune avec le même `url_source`.
-9. **Rien à extraire** : réponds exactement `[]`.
+9. **Rien à extraire** : réponds `[]` uniquement si le texte n'aborde aucun des quatre thèmes. Si un thème est abordé sans mesure précise (intention générale, principe, critique), produis quand même une fiche avec nature `piste` ou `reaction`, un résumé fidèle à la généralité du propos, et confiance `incertain`.
+10. **Plusieurs acteurs dans un même texte** (article de synthèse) : une fiche par acteur cité, chacune avec son propre `acteur_id`.
 
 ## Exemple
 
