@@ -1,0 +1,49 @@
+name: Collecte et extraction quotidiennes
+
+on:
+  schedule:
+    - cron: "0 4 * * *"        # 04:00 UTC = 06:00 Paris (été) / 05:00 (hiver)
+  workflow_dispatch:
+    inputs:
+      max_docs:
+        description: "Nombre maximal de documents à extraire"
+        default: "40"
+        required: false
+      sans_collecte:
+        description: "Extraction seule (true/false)"
+        default: "false"
+        required: false
+
+concurrency:
+  group: collecte
+  cancel-in-progress: false
+
+jobs:
+  collecte:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Dépendances
+        run: pip install -r requirements-collecte.txt
+
+      - name: Collecte + extraction
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          LLM_FOURNISSEUR: ${{ vars.LLM_FOURNISSEUR || 'gemini' }}
+          LLM_MODELE: ${{ vars.LLM_MODELE }}
+          MAX_DOCS: ${{ github.event.inputs.max_docs || '40' }}
+        run: |
+          ARGS=""
+          if [ "${{ github.event.inputs.sans_collecte }}" = "true" ]; then ARGS="--sans-collecte"; fi
+          python jobs/run_collecte.py $ARGS
