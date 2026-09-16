@@ -60,11 +60,12 @@ def maj_document(doc_id: str, **champs) -> None:
     get_client().table("documents").update(champs).eq("id", doc_id).execute()
 
 
-def inserer_mesures(fiches: list[dict]) -> int:
+def inserer_mesures(fiches: list[dict]) -> list[dict]:
+    """Insère et retourne les lignes créées (avec leur id)."""
     if not fiches:
-        return 0
+        return []
     res = get_client().table("mesures").insert(fiches).execute()
-    return len(res.data or [])
+    return res.data or []
 
 
 def ouvrir_run(fournisseur: str, modele: str) -> str:

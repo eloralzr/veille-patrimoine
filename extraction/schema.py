@@ -23,6 +23,7 @@ CHAMPS_OPTIONNELS = ["mots_cles", "citation", "impact_client", "date_source"]
 CHAMPS_AUTORISES = set(CHAMPS_OBLIGATOIRES + CHAMPS_OPTIONNELS)
 
 MAX_MOTS_CITATION = 25
+DATE_PLANCHER = date(2025, 9, 1)   # règle de fraîcheur : aucune source antérieure à septembre 2025
 
 
 def load_taxonomie() -> dict:
@@ -92,8 +93,12 @@ def valider_fiche(f: dict, idx: dict, acteurs_ids: set[str]) -> list[str]:
         err.append(f"confiance invalide : {f['confiance']}")
     if f.get("url_source") and not _is_url(f["url_source"]):
         err.append("url_source doit être une URL http(s)")
-    if f.get("date_source") and not _is_date(str(f["date_source"])):
+    if not f.get("date_source"):
+        err.append("date_source obligatoire (sources à partir de septembre 2025)")
+    elif not _is_date(str(f["date_source"])):
         err.append("date_source doit être au format AAAA-MM-JJ")
+    elif date.fromisoformat(str(f["date_source"])) < DATE_PLANCHER:
+        err.append(f"source datée du {f['date_source']} : antérieure à septembre 2025, refusée")
     if f.get("mots_cles") is not None and not isinstance(f["mots_cles"], list):
         err.append("mots_cles doit être une liste")
     cit = f.get("citation") or ""

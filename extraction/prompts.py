@@ -50,7 +50,8 @@ RÈGLES :
 2. N'extrais que ce qui relève de la taxonomie. Si le texte aborde un thème sans mesure précise, produis une fiche `piste` ou `reaction` avec confiance `incertain`.
 3. Fidélité absolue : jamais de complément tiré de ta mémoire sur l'acteur.
 4. Si le texte rapporte la position d'un autre acteur de la liste fournie, crée une fiche pour lui avec son acteur_id.
-5. Si rien ne relève des thèmes : réponds exactement [].
+5. Si la source est antérieure au 1er septembre 2025, réponds exactement [].
+6. Si rien ne relève des thèmes : réponds exactement [].
 """
 
 

@@ -27,6 +27,40 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name
 log = logging.getLogger("jobs")
 
 TEXTE_MIN = 200  # en dessous, le document est ignoré (résumé de flux trop court, page non récupérée)
+EXPORT: list[dict] = []          # fiches créées pendant cette exécution, exportées pour l'artefact
+EXPORT_DIR = ROOT / "exports"
+CHAMPS_EXPORT = ["id", "acteur_id", "theme_id", "sous_theme_id", "mots_cles", "titre", "resume", "citation",
+                 "nature", "impact_client", "url_source", "date_source", "confiance", "saisi_par", "cree_le"]
+
+
+def ecrire_exports() -> str | None:
+    """Écrit exports/fiches_AAAA-MM-JJ.json (fiches de la nuit) et exports/derniers_7_jours.json. Retourne le chemin du jour."""
+    import json
+    from datetime import date, timedelta
+    EXPORT_DIR.mkdir(exist_ok=True)
+    aujourd_hui = date.today().isoformat()
+    fiches = [{k: f.get(k) for k in CHAMPS_EXPORT} for f in EXPORT]
+    chemin = EXPORT_DIR / f"fiches_{aujourd_hui}.json"
+    # fusion si plusieurs exécutions le même jour
+    if chemin.exists():
+        try:
+            anciennes = json.loads(chemin.read_text(encoding="utf-8"))
+            ids = {f.get("id") for f in fiches}
+            fiches = [f for f in anciennes if f.get("id") not in ids] + fiches
+        except Exception:
+            pass
+    chemin.write_text(json.dumps(fiches, ensure_ascii=False, indent=2), encoding="utf-8")
+    # fenêtre glissante de 7 jours pour rattraper un import oublié
+    limite = date.today() - timedelta(days=7)
+    semaine: list[dict] = []
+    for p in sorted(EXPORT_DIR.glob("fiches_*.json")):
+        try:
+            if date.fromisoformat(p.stem.split("_", 1)[1]) >= limite:
+                semaine.extend(json.loads(p.read_text(encoding="utf-8")))
+        except Exception:
+            continue
+    (EXPORT_DIR / "derniers_7_jours.json").write_text(json.dumps(semaine, ensure_ascii=False, indent=2), encoding="utf-8")
+    return str(chemin)
 
 
 def extraire(max_docs: int, acteurs: set[str], tax: dict, idx: dict, fournisseur: str) -> dict:
@@ -66,7 +100,9 @@ def extraire(max_docs: int, acteurs: set[str], tax: dict, idx: dict, fournisseur
             ligne = sch.normaliser_fiche(f, saisi_par=f"auto:{fournisseur}")
             ligne["document_id"] = d["id"]
             lignes.append(ligne)
-        n = supa.inserer_mesures(lignes)
+        creees = supa.inserer_mesures(lignes)
+        n = len(creees)
+        EXPORT.extend(creees)
         note = f"{len(refus)} fiche(s) refusée(s) : " + " | ".join("; ".join(e) for _, e in refus) if refus else None
         supa.maj_document(d["id"], statut="traite", nb_fiches=n, erreur=(note or "")[:500] or None,
                           traite_le=maintenant, fournisseur=fournisseur)
@@ -105,6 +141,8 @@ def main() -> int:
             total["fiches_creees"] = s["fiches_creees"]
             total["erreurs"] += s["erreurs"]
             journal.append(f"extraction : {s}")
+            chemin = ecrire_exports()
+            journal.append(f"export : {len(EXPORT)} fiche(s) → {chemin}")
     except Exception:
         code = 1
         journal.append("ERREUR FATALE :\n" + traceback.format_exc()[-1500:])

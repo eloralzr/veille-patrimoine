@@ -2,7 +2,7 @@
 
 Outil de veille des programmes économiques et fiscaux (présidentielle 2027) sur les thèmes de l'ingénierie patrimoniale : fiscalité, transmission, structuration, protection.
 
-Propriétaire : Elora Lazaar — v0.7 (collecte automatique), 2026-09-15
+Propriétaire : Elora Lazaar — v0.8 (collecte automatique + export vers l'artefact Claude), 2026-09-16
 
 ## Principe
 
@@ -10,6 +10,7 @@ Propriétaire : Elora Lazaar — v0.7 (collecte automatique), 2026-09-15
 2. La fiche est collée dans l'application (**Saisie**), validée contre la taxonomie, enregistrée dans Supabase.
 3. **Fiches**, **Tableau de bord** et export CSV pour l'équipe ; workflow brut → vérifié → publié.
 4. Depuis la phase 7 : collecte RSS et extraction automatiques chaque nuit (GitHub Actions + API LLM interchangeable, Gemini par défaut) ; page **File de collecte**.
+5. Depuis la phase 8 : l'interface utilisée par l'équipe est l'**artefact Claude « Veille programmes »** (réseau Lazard n'autorisant pas l'hébergement externe) ; le pipeline publie chaque nuit `exports/fiches_AAAA-MM-JJ.json`, importé dans l'artefact en deux minutes (`docs/ROUTINE-quotidienne.md`). Streamlit + Supabase restent le dossier d'internalisation.
 
 Données publiques uniquement. Aucun secret, aucune donnée collectée dans ce dépôt.
 
@@ -33,6 +34,8 @@ jobs/run_collecte.py                    # tâche nocturne collecte → extractio
 requirements-collecte.txt               # dépendances de la tâche nocturne
 db/migration_phase7.sql                 # migration base pour la phase 7
 docs/INSTALL-phase7.md                  # notice phase 7
+exports/                                # fiches produites chaque nuit, à importer dans l'artefact Claude
+docs/ROUTINE-quotidienne.md             # le geste du matin (2 min)
 ```
 
 ## Installation
