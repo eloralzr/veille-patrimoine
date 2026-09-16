@@ -73,9 +73,18 @@ def extraire(max_docs: int, acteurs: set[str], tax: dict, idx: dict, fournisseur
     for d in docs:
         texte = (d.get("texte") or "").strip()
         if len(texte) < TEXTE_MIN:
-            supa.maj_document(d["id"], statut="ignore", erreur="texte trop court", traite_le=maintenant)
-            stats["docs_ignores"] += 1
-            continue
+            # seconde chance : récupération de l'article complet (liens Google Actualités décodés)
+            from collecte import rss
+            txt, url_finale = rss._texte_article(d.get("url_finale") or d["url"])
+            if len(txt) >= TEXTE_MIN:
+                texte = txt[:rss.TEXTE_MAX]
+                supa.maj_document(d["id"], texte=texte, url_finale=url_finale)
+                d["url_finale"] = url_finale
+            else:
+                supa.maj_document(d["id"], statut="ignore", erreur="texte trop court (article non récupérable)", traite_le=maintenant,
+                                  url_finale=url_finale or d.get("url_finale"))
+                stats["docs_ignores"] += 1
+                continue
         try:
             brut = llm.appeler(systeme, prompts.prompt_utilisateur(
                 d["acteur_id"], d.get("url_finale") or d["url"], d.get("date_publication"),

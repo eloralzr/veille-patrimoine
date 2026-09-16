@@ -49,22 +49,47 @@ def _date_entree(e) -> datetime | None:
     return None
 
 
-def _texte_article(url: str) -> tuple[str, str | None]:
-    """Retourne (texte, url_finale). Texte vide si échec."""
+def resoudre_url(url: str) -> str:
+    """Les liens des flux Google Actualités (news.google.com/rss/articles/...) sont encodés :
+    on les décode pour obtenir l'URL réelle de l'article. Retourne l'URL d'origine si le décodage échoue."""
+    if "news.google.com" not in url:
+        return url
     try:
-        r = requests.get(url, headers={"User-Agent": UA}, timeout=TIMEOUT, allow_redirects=True)
-        if r.status_code != 200 or "text/html" not in r.headers.get("content-type", ""):
+        from googlenewsdecoder import gnewsdecoder
+        res = gnewsdecoder(url, interval=1)
+        if isinstance(res, dict) and res.get("status") and res.get("decoded_url"):
+            return res["decoded_url"]
+    except Exception as ex:
+        log.debug("décodage Google News échoué %s : %s", url[:80], ex)
+    return url
+
+
+UA_NAVIGATEUR = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                 "(KHTML, like Gecko) Chrome/124.0 Safari/537.36 veille-patrimoine/0.8")
+
+
+def _texte_article(url: str) -> tuple[str, str | None]:
+    """Retourne (texte, url_finale). Texte vide si échec. Résout d'abord les liens Google Actualités."""
+    cible = resoudre_url(url)
+    try:
+        r = requests.get(cible, headers={"User-Agent": UA_NAVIGATEUR, "Accept-Language": "fr-FR,fr;q=0.9"},
+                         timeout=TIMEOUT, allow_redirects=True)
+        if r.status_code != 200 or "html" not in r.headers.get("content-type", ""):
             return "", r.url
+        txt = ""
         try:
             import trafilatura
             txt = trafilatura.extract(r.text, include_comments=False, include_tables=False,
-                                      favor_precision=True) or ""
+                                      favor_precision=False, target_language="fr") or ""
         except Exception:
             txt = ""
+        if not txt:  # repli grossier : texte des paragraphes
+            paras = re.findall(r"<p[^>]*>(.*?)</p>", r.text, flags=re.S | re.I)
+            txt = " ".join(_nettoyer_html(p) for p in paras if len(_nettoyer_html(p)) > 60)
         return txt.strip(), r.url
     except Exception as ex:
-        log.debug("fetch échoué %s : %s", url, ex)
-        return "", None
+        log.debug("fetch échoué %s : %s", cible[:80], ex)
+        return "", cible if cible != url else None
 
 
 def _nettoyer_html(s: str) -> str:
