@@ -2,7 +2,7 @@
 
 Outil de veille des programmes économiques et fiscaux (présidentielle 2027) sur les thèmes de l'ingénierie patrimoniale : fiscalité, transmission, structuration, protection.
 
-Propriétaire : Elora Lazaar — v0.8 (collecte automatique + export vers l'artefact Claude), 2026-09-16
+Propriétaire : Elora Lazaar — v0.9 (prompt durci, repli de modèle, domaines exclus, référentiel v2026-09-17), 2026-09-17
 
 ## Principe
 
@@ -36,6 +36,9 @@ db/migration_phase7.sql                 # migration base pour la phase 7
 docs/INSTALL-phase7.md                  # notice phase 7
 exports/                                # fiches produites chaque nuit, à importer dans l'artefact Claude
 docs/ROUTINE-quotidienne.md             # le geste du matin (2 min)
+docs/MODE-EMPLOI.md                     # mode d'emploi complet
+docs/PROJET-import-veille.md            # instructions du Projet Claude d'import
+data/domaines_exclus.txt                # sites écartés de la collecte
 ```
 
 ## Installation

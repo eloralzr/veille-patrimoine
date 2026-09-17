@@ -18,13 +18,21 @@ import requests
 log = logging.getLogger("extraction.llm")
 
 MODELES_DEFAUT = {
-    "gemini": "gemini-2.5-flash",
+    "gemini": "gemini-3.6-flash",
     "mistral": "mistral-small-latest",
     "anthropic": "claude-sonnet-4-5",
     "openai": "gpt-4o-mini",
 }
 TIMEOUT = 90
 MAX_TENTATIVES = 3
+# modèles essayés dans l'ordre si le modèle configuré renvoie "not found / no longer available"
+REPLI = {
+    "gemini": ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3-flash", "gemini-2.5-flash"],
+    "mistral": ["mistral-small-latest", "mistral-medium-latest"],
+    "anthropic": ["claude-sonnet-4-5", "claude-3-5-haiku-latest"],
+    "openai": [],
+}
+_modele_actif: dict[str, str] = {}
 
 
 class ErreurLLM(RuntimeError):
@@ -35,8 +43,15 @@ def fournisseur_courant() -> tuple[str, str]:
     f = os.environ.get("LLM_FOURNISSEUR", "gemini").strip().lower()
     if f not in MODELES_DEFAUT:
         raise ErreurLLM(f"Fournisseur inconnu : {f}")
+    if f in _modele_actif:              # un repli a déjà été retenu pendant cette exécution
+        return f, _modele_actif[f]
     m = os.environ.get("LLM_MODELE", "").strip() or MODELES_DEFAUT[f]
     return f, m
+
+
+def _modele_indisponible(msg: str) -> bool:
+    m = msg.lower()
+    return ("http 404" in m or "http 400" in m) and ("model" in m) and ("not found" in m or "no longer available" in m or "not supported" in m)
 
 
 def _cle(nom: str) -> str:
@@ -53,7 +68,7 @@ def _gemini(systeme: str, utilisateur: str, modele: str) -> str:
     body = {
         "systemInstruction": {"parts": [{"text": systeme}]},
         "contents": [{"role": "user", "parts": [{"text": utilisateur}]}],
-        "generationConfig": {"temperature": 0.1, "responseMimeType": "application/json", "maxOutputTokens": 4096},
+        "generationConfig": {"temperature": 0.1, "responseMimeType": "application/json", "maxOutputTokens": 8192},
     }
     # clé transmise dans l'en-tête recommandé par Google (compatible anciens AIza… et nouveaux AQ.… formats)
     r = requests.post(url, headers={"x-goog-api-key": _cle("GEMINI_API_KEY"), "Content-Type": "application/json"},
@@ -85,7 +100,7 @@ def _openai_compatible(systeme: str, utilisateur: str, modele: str, base_url: st
 
 
 def _anthropic(systeme: str, utilisateur: str, modele: str) -> str:
-    body = {"model": modele, "max_tokens": 4096, "temperature": 0.1, "system": systeme,
+    body = {"model": modele, "max_tokens": 8192, "temperature": 0.1, "system": systeme,
             "messages": [{"role": "user", "content": utilisateur}]}
     r = requests.post("https://api.anthropic.com/v1/messages",
                       headers={"x-api-key": _cle("ANTHROPIC_API_KEY"), "anthropic-version": "2023-06-01"},
@@ -116,6 +131,16 @@ def appeler(systeme: str, utilisateur: str) -> str:
         except ErreurLLM as ex:
             derniere = ex
             msg = str(ex)
+            if _modele_indisponible(msg):
+                # essayer le modèle de repli suivant, une seule fois par modèle
+                candidats = [x for x in REPLI.get(f, []) if x != m]
+                if candidats:
+                    m = candidats[0]
+                    REPLI[f] = candidats[1:]
+                    _modele_actif[f] = m
+                    log.warning("modèle indisponible, repli sur %s", m)
+                    continue
+                raise
             transitoire = any(code in msg for code in ("HTTP 429", "HTTP 500", "HTTP 502", "HTTP 503", "HTTP 504"))
             if not transitoire or tentative == MAX_TENTATIVES:
                 raise

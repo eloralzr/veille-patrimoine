@@ -4,123 +4,249 @@
 # Usage : classification des mesures par Claude (extraction/prompts.py) et filtres de l'interface.
 # Règle : un mot-clé sert à la recherche ET à la classification ; ajouter ici avant d'ajouter dans requetes_presse.csv.
 
-version: "2026-09-14"
-proprietaire: "Elora Lazaar"
-
+version: '2026-09-17'
+proprietaire: Elora Lazaar
 themes:
-  - id: fiscalite
-    libelle: Fiscalité du patrimoine
-    sous_themes:
-      - id: ifi_fortune
-        libelle: IFI / imposition de la fortune
-        mots_cles: [IFI, impôt sur la fortune, ISF, taxe Zucman, impôt plancher, patrimoine des ultra-riches, holding patrimoniale, biens professionnels]
-        impact_client: Assiette et taux sur le patrimoine net ; traitement des biens professionnels et des holdings
-      - id: capital_pfu
-        libelle: Revenus du capital / PFU
-        mots_cles: [flat tax, PFU, prélèvement forfaitaire unique, dividendes, intérêts, barème progressif, CSG capital, prélèvements sociaux]
-        impact_client: Rendement net des placements et de la rémunération du dirigeant
-      - id: plus_values
-        libelle: Plus-values mobilières et immobilières
-        mots_cles: [plus-value, abattement pour durée de détention, résidence principale, plus-value immobilière, apport-cession, 150-0 B ter, cession d'entreprise]
-        impact_client: Arbitrages de cession et calendrier
-      - id: assurance_vie
-        libelle: Assurance-vie
-        mots_cles: [assurance-vie, fonds euros, unités de compte, 990 I, 757 B, abattement 152 500, fiscalité des rachats, contrat de capitalisation]
-        impact_client: Enveloppe centrale de la clientèle patrimoniale
-      - id: epargne_retraite
-        libelle: Épargne retraite / PER
-        mots_cles: [PER, plan d'épargne retraite, déduction, sortie en capital, retraite par capitalisation, PEA]
-        impact_client: Déductibilité et fiscalité de sortie
-      - id: immobilier
-        libelle: Fiscalité immobilière
-        mots_cles: [revenus fonciers, LMNP, meublé, Pinel, statut du bailleur privé, taxe foncière, déficit foncier, SCPI, droits de mutation, frais de notaire]
-        impact_client: Rentabilité locative et détention directe vs indirecte
-      - id: remuneration_dirigeant
-        libelle: Rémunération et fiscalité du dirigeant
-        mots_cles: [salaire ou dividendes, cotisations, holding, impôt sur les sociétés, TPE, PME, management package, BSPCE]
-        impact_client: Structuration de la rémunération
-      - id: exit_tax_mobilite
-        libelle: Exit tax et mobilité internationale
-        mots_cles: [exit tax, expatriation, non-résident, convention fiscale, impatrié, nationalité fiscale]
-        impact_client: Clients mobiles et expatriés
-
-  - id: transmission
-    libelle: Transmission et succession
-    sous_themes:
-      - id: droits_succession
-        libelle: Droits de succession et abattements
-        mots_cles: [droits de succession, abattement 100 000, barème, ligne directe, héritage, réserve héréditaire, patrimoine hérité, taxe sur l'héritage]
-        impact_client: Coût de transmission par génération
-      - id: donations
-        libelle: Donations et démembrement
-        mots_cles: [donation, donation-partage, rappel fiscal 15 ans, démembrement, nue-propriété, usufruit, don familial, don Sarkozy]
-        impact_client: Stratégie de transmission anticipée
-      - id: dutreil
-        libelle: Transmission d'entreprise / Dutreil
-        mots_cles: [pacte Dutreil, transmission d'entreprise, exonération 75 %, entreprise familiale, holding animatrice]
-        impact_client: Chefs d'entreprise et familles actionnaires
-      - id: av_deces
-        libelle: Assurance-vie au décès
-        mots_cles: [clause bénéficiaire, 990 I, 757 B, hors succession, assurance-vie succession, primes manifestement exagérées]
-        impact_client: Levier principal de transmission hors droits
-
-  - id: structuration
-    libelle: Structuration juridique et sociétaire
-    sous_themes:
-      - id: societes_patrimoniales
-        libelle: Holdings et sociétés patrimoniales
-        mots_cles: [holding, société patrimoniale, SCI, impôt sur les sociétés, régime mère-fille, intégration fiscale, abus de droit, optimisation fiscale]
-        impact_client: Choix du véhicule de détention
-      - id: regime_matrimonial
-        libelle: Régime matrimonial et famille
-        mots_cles: [régime matrimonial, communauté universelle, PACS, famille recomposée, conjoint survivant, indivision]
-        impact_client: Protection et transmission au sein du couple
-
-  - id: protection
-    libelle: Protection et prévoyance
-    sous_themes:
-      - id: retraite
-        libelle: Retraite
-        mots_cles: [âge de départ, réforme des retraites, pension, capitalisation, minimum contributif, réversion, régime universel]
-        impact_client: Horizon et revenus de remplacement
-      - id: dependance
-        libelle: Dépendance et grand âge
-        mots_cles: [dépendance, cinquième risque, EHPAD, APA, assurance dépendance, aidants, grand âge]
-        impact_client: Financement du grand âge
-      - id: prevoyance_protection
-        libelle: Prévoyance et protection juridique
-        mots_cles: [prévoyance, invalidité, décès, handicap, mandat de protection future, tutelle, curatelle]
-        impact_client: Couverture des risques familiaux
-
-# Nature de la prise de position (champ obligatoire de chaque fiche mesure)
+- id: fiscalite
+  libelle: Fiscalité du patrimoine
+  sous_themes:
+  - id: ifi_fortune
+    libelle: IFI / imposition de la fortune
+    mots_cles:
+    - IFI
+    - impôt sur la fortune
+    - ISF
+    - taxe Zucman
+    - impôt plancher
+    - patrimoine des ultra-riches
+    - holding patrimoniale
+    - biens professionnels
+    impact_client: Assiette et taux sur le patrimoine net ; traitement des biens professionnels et des holdings
+  - id: capital_pfu
+    libelle: Revenus du capital / PFU
+    mots_cles:
+    - flat tax
+    - PFU
+    - prélèvement forfaitaire unique
+    - dividendes
+    - intérêts
+    - barème progressif
+    - CSG capital
+    - prélèvements sociaux
+    impact_client: Rendement net des placements et de la rémunération du dirigeant
+  - id: plus_values
+    libelle: Plus-values mobilières et immobilières
+    mots_cles:
+    - plus-value
+    - abattement pour durée de détention
+    - résidence principale
+    - plus-value immobilière
+    - apport-cession
+    - 150-0 B ter
+    - cession d'entreprise
+    impact_client: Arbitrages de cession et calendrier
+  - id: assurance_vie
+    libelle: Assurance-vie
+    mots_cles:
+    - assurance-vie
+    - fonds euros
+    - unités de compte
+    - 990 I
+    - 757 B
+    - abattement 152 500
+    - fiscalité des rachats
+    - contrat de capitalisation
+    impact_client: Enveloppe centrale de la clientèle patrimoniale
+  - id: epargne_retraite
+    libelle: Épargne retraite / PER
+    mots_cles:
+    - PER
+    - plan d'épargne retraite
+    - déduction
+    - sortie en capital
+    - retraite par capitalisation
+    - PEA
+    impact_client: Déductibilité et fiscalité de sortie
+  - id: immobilier
+    libelle: Fiscalité immobilière
+    mots_cles:
+    - revenus fonciers
+    - LMNP
+    - meublé
+    - Pinel
+    - statut du bailleur privé
+    - taxe foncière
+    - déficit foncier
+    - SCPI
+    - droits de mutation
+    - frais de notaire
+    impact_client: Rentabilité locative et détention directe vs indirecte
+  - id: remuneration_dirigeant
+    libelle: Rémunération et fiscalité du dirigeant
+    mots_cles:
+    - salaire ou dividendes
+    - cotisations
+    - holding
+    - impôt sur les sociétés
+    - TPE
+    - PME
+    - management package
+    - BSPCE
+    impact_client: Structuration de la rémunération
+  - id: exit_tax_mobilite
+    libelle: Exit tax et mobilité internationale
+    mots_cles:
+    - exit tax
+    - expatriation
+    - non-résident
+    - convention fiscale
+    - impatrié
+    - nationalité fiscale
+    impact_client: Clients mobiles et expatriés
+  - id: cadre_general
+    libelle: Cadre général et stabilité fiscale
+    mots_cles:
+    - stabilité fiscale
+    - pas de nouvel impôt
+    - réforme fiscale globale
+    - loi de programmation fiscale
+    - niches fiscales
+    impact_client: Prévisibilité du cadre fiscal sur le quinquennat ; engagements transversaux sans mesure ciblée
+- id: transmission
+  libelle: Transmission et succession
+  sous_themes:
+  - id: droits_succession
+    libelle: Droits de succession et abattements
+    mots_cles:
+    - droits de succession
+    - abattement 100 000
+    - barème
+    - ligne directe
+    - héritage
+    - réserve héréditaire
+    - patrimoine hérité
+    - taxe sur l'héritage
+    impact_client: Coût de transmission par génération
+  - id: donations
+    libelle: Donations et démembrement
+    mots_cles:
+    - donation
+    - donation-partage
+    - rappel fiscal 15 ans
+    - démembrement
+    - nue-propriété
+    - usufruit
+    - don familial
+    - don Sarkozy
+    impact_client: Stratégie de transmission anticipée
+  - id: dutreil
+    libelle: Transmission d'entreprise / Dutreil
+    mots_cles:
+    - pacte Dutreil
+    - transmission d'entreprise
+    - exonération 75 %
+    - entreprise familiale
+    - holding animatrice
+    impact_client: Chefs d'entreprise et familles actionnaires
+  - id: av_deces
+    libelle: Assurance-vie au décès
+    mots_cles:
+    - clause bénéficiaire
+    - 990 I
+    - 757 B
+    - hors succession
+    - assurance-vie succession
+    - primes manifestement exagérées
+    impact_client: Levier principal de transmission hors droits
+- id: structuration
+  libelle: Structuration juridique et sociétaire
+  sous_themes:
+  - id: societes_patrimoniales
+    libelle: Holdings et sociétés patrimoniales
+    mots_cles:
+    - holding
+    - société patrimoniale
+    - SCI
+    - impôt sur les sociétés
+    - régime mère-fille
+    - intégration fiscale
+    - abus de droit
+    - optimisation fiscale
+    impact_client: Choix du véhicule de détention
+  - id: regime_matrimonial
+    libelle: Régime matrimonial et famille
+    mots_cles:
+    - régime matrimonial
+    - communauté universelle
+    - PACS
+    - famille recomposée
+    - conjoint survivant
+    - indivision
+    impact_client: Protection et transmission au sein du couple
+- id: protection
+  libelle: Protection et prévoyance
+  sous_themes:
+  - id: retraite
+    libelle: Retraite
+    mots_cles:
+    - âge de départ
+    - réforme des retraites
+    - pension
+    - capitalisation
+    - minimum contributif
+    - réversion
+    - régime universel
+    impact_client: Horizon et revenus de remplacement
+  - id: dependance
+    libelle: Dépendance et grand âge
+    mots_cles:
+    - dépendance
+    - cinquième risque
+    - EHPAD
+    - APA
+    - assurance dépendance
+    - aidants
+    - grand âge
+    impact_client: Financement du grand âge
+  - id: prevoyance_protection
+    libelle: Prévoyance et protection juridique
+    mots_cles:
+    - prévoyance
+    - invalidité
+    - décès
+    - handicap
+    - mandat de protection future
+    - tutelle
+    - curatelle
+    impact_client: Couverture des risques familiaux
 natures_position:
-  - id: engagement
-    libelle: Engagement de programme
-    definition: Mesure formellement inscrite dans un programme ou annoncée comme engagement de campagne
-  - id: piste
-    libelle: Piste évoquée
-    definition: Idée mentionnée sans engagement (interview, "on pourrait", "à l'étude")
-  - id: proposition
-    libelle: Proposition d'acteur non candidat
-    definition: Recommandation d'un think tank, d'une organisation ou d'un club
-  - id: reaction
-    libelle: Réaction
-    definition: Prise de position en réponse à une mesure d'un autre acteur
-  - id: chiffrage
-    libelle: Chiffrage / évaluation
-    definition: Estimation du coût ou du rendement d'une mesure (OFCE, Institut Montaigne, presse)
-
-# Niveau de confiance attribué à la fiche
+- id: engagement
+  libelle: Engagement de programme
+  definition: Mesure formellement inscrite dans un programme ou annoncée comme engagement de campagne
+- id: piste
+  libelle: Piste évoquée
+  definition: Idée mentionnée sans engagement (interview, "on pourrait", "à l'étude")
+- id: proposition
+  libelle: Proposition d'acteur non candidat
+  definition: Recommandation d'un think tank, d'une organisation ou d'un club
+- id: reaction
+  libelle: Réaction
+  definition: Prise de position en réponse à une mesure d'un autre acteur
+- id: chiffrage
+  libelle: Chiffrage / évaluation
+  definition: Estimation du coût ou du rendement d'une mesure (OFCE, Institut Montaigne, presse)
 niveaux_confiance:
-  - id: eleve
-    libelle: Élevé
-    critere: Source primaire (programme, site, déclaration directe), mesure explicite et datée
-  - id: moyen
-    libelle: Moyen
-    critere: Source secondaire fiable ou mesure formulée de manière générale
-  - id: incertain
-    libelle: Incertain
-    critere: Source unique secondaire, attribution indirecte ou formulation ambiguë ; à vérifier par un ingénieur
-
-# Statut de validation d'une fiche dans l'outil
-statuts_fiche: [brut, verifie, publie, retire]
+- id: eleve
+  libelle: Élevé
+  critere: Source primaire (programme, site, déclaration directe), mesure explicite et datée
+- id: moyen
+  libelle: Moyen
+  critere: Source secondaire fiable ou mesure formulée de manière générale
+- id: incertain
+  libelle: Incertain
+  critere: Source unique secondaire, attribution indirecte ou formulation ambiguë ; à vérifier par un ingénieur
+statuts_fiche:
+- brut
+- verifie
+- publie
+- retire

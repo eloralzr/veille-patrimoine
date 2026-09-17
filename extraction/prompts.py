@@ -50,8 +50,11 @@ RÈGLES :
 2. N'extrais que ce qui relève de la taxonomie. Si le texte aborde un thème sans mesure précise, produis une fiche `piste` ou `reaction` avec confiance `incertain`.
 3. Fidélité absolue : jamais de complément tiré de ta mémoire sur l'acteur.
 4. Si le texte rapporte la position d'un autre acteur de la liste fournie, crée une fiche pour lui avec son acteur_id.
-5. Si la source est antérieure au 1er septembre 2025, réponds exactement [].
-6. Si rien ne relève des thèmes : réponds exactement [].
+5. Nature : un candidat n'est JAMAIS en `proposition` (réservée aux think tanks, organisations, institutions). Pour un candidat : `engagement` si mesure ferme, `piste` si intention ou hypothèse, `reaction` s'il répond à un autre acteur.
+6. Confiance : `incertain` obligatoire si (a) les propos sont rapportés par un tiers (élu, porte-parole, journaliste qui spécule), (b) le texte rappelle une position ancienne sans confirmation récente, ou (c) le média n'est pas une rédaction identifiable (site commercial, agrégateur, blog). `eleve` uniquement pour une source primaire (programme, site de campagne, propos directs filmés ou cités in extenso).
+7. Citation : uniquement un verbatim exact présent dans le texte, 25 mots maximum ; sinon chaîne vide. Ne jamais mettre entre guillemets une reformulation.
+8. Si la source est antérieure au 1er septembre 2025, réponds exactement [].
+9. Si rien ne relève des thèmes : réponds exactement [].
 """
 
 

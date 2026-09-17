@@ -22,6 +22,24 @@ log = logging.getLogger("collecte.rss")
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUETES_PRESSE = ROOT / "data" / "requetes_presse.csv"
+DOMAINES_EXCLUS = ROOT / "data" / "domaines_exclus.txt"
+
+
+def _charger_exclus() -> set[str]:
+    if not DOMAINES_EXCLUS.exists():
+        return set()
+    return {l.strip().lower() for l in DOMAINES_EXCLUS.read_text(encoding="utf-8").splitlines()
+            if l.strip() and not l.startswith("#")}
+
+
+def _domaine(url: str) -> str:
+    m = re.match(r"https?://([^/]+)", url or "")
+    return (m.group(1).lower().removeprefix("www.") if m else "")
+
+
+def domaine_exclu(url: str, exclus: set[str]) -> bool:
+    d = _domaine(url)
+    return any(d == e or d.endswith("." + e) for e in exclus)
 
 UA = "veille-patrimoine/0.7 (+veille programmes electoraux; contact via depot GitHub)"
 TIMEOUT = 20
@@ -166,6 +184,8 @@ def collecter(acteurs_valides: set[str], recuperer_texte: bool = True) -> dict:
     existants = supa.hashes_existants(list(vus))
     nouveaux = [d for h, d in vus.items() if h not in existants]
 
+    exclus = _charger_exclus()
+    retenus: list[dict] = []
     for d in nouveaux:
         if recuperer_texte:
             txt, url_finale = _texte_article(d["url"])
@@ -173,9 +193,15 @@ def collecter(acteurs_valides: set[str], recuperer_texte: bool = True) -> dict:
                 d["texte"] = txt
             d["url_finale"] = url_finale
             time.sleep(0.5)
+        cible = d.get("url_finale") or d["url"]
+        if domaine_exclu(cible, exclus):
+            stats["docs_exclus"] = stats.get("docs_exclus", 0) + 1
+            log.info("domaine exclu : %s", _domaine(cible))
+            continue
         d["texte"] = (d["texte"] or "")[:TEXTE_MAX]
         d.pop("_fiabilite", None)
+        retenus.append(d)
 
-    stats["docs_nouveaux"] = supa.inserer_documents(nouveaux)
+    stats["docs_nouveaux"] = supa.inserer_documents(retenus)
     log.info("collecte : %s", stats)
     return stats

@@ -1,0 +1,8 @@
+# Un domaine par ligne. Les articles provenant de ces sites ne sont pas collectés (sites commerciaux, agrégateurs, contenus non journalistiques).
+bdor.fr
+nextplz.fr
+headtopics.com
+mercipourlinfo.fr
+pleinevie.fr
+fr.finance.yahoo.com
+msn.com

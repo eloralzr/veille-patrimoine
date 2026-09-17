@@ -9,6 +9,7 @@ Usage :
 from __future__ import annotations
 
 import argparse
+import json
 import logging
 import os
 import sys
@@ -86,10 +87,16 @@ def extraire(max_docs: int, acteurs: set[str], tax: dict, idx: dict, fournisseur
                 stats["docs_ignores"] += 1
                 continue
         try:
-            brut = llm.appeler(systeme, prompts.prompt_utilisateur(
-                d["acteur_id"], d.get("url_finale") or d["url"], d.get("date_publication"),
-                d.get("titre"), texte, sorted(acteurs)))
-            fiches = llm.extraire_liste(brut)
+            invite = prompts.prompt_utilisateur(d["acteur_id"], d.get("url_finale") or d["url"], d.get("date_publication"),
+                                                d.get("titre"), texte, sorted(acteurs))
+            try:
+                fiches = llm.extraire_liste(llm.appeler(systeme, invite))
+            except (ValueError, json.JSONDecodeError):
+                # réponse tronquée ou mal formée : une seconde chance avec un texte raccourci
+                log.warning("JSON invalide, nouvel essai avec un texte plus court : %s", (d.get("titre") or d["url"])[:60])
+                fiches = llm.extraire_liste(llm.appeler(systeme, prompts.prompt_utilisateur(
+                    d["acteur_id"], d.get("url_finale") or d["url"], d.get("date_publication"),
+                    d.get("titre"), texte[:6000], sorted(acteurs))))
         except Exception as ex:
             supa.maj_document(d["id"], statut="erreur", erreur=str(ex)[:500], traite_le=maintenant, fournisseur=fournisseur)
             stats["erreurs"] += 1

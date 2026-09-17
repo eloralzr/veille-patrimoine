@@ -52,3 +52,5 @@ labib-selma-programme,labib-selma,pdf,,manuel,mensuel,fr,primaire,na,false,Progr
 branco-juan-programme,branco-juan,pdf,,manuel,mensuel,fr,primaire,na,false,Programme publié uniquement ; veille mensuelle,
 egger-clara-programme,egger-clara,pdf,,manuel,mensuel,fr,primaire,na,false,Programme publié uniquement ; veille mensuelle,
 massard-lydie-programme,massard-lydie,pdf,,manuel,mensuel,fr,primaire,na,false,Programme publié uniquement ; veille mensuelle,
+ifrap-comparateur,fondation-ifrap,page_web,https://www.ifrap.org/comparateurs/presidentielles-2027,auto,hebdo,fr,secondaire,na,false,Surveillance des changements du comparateur ; à activer après vérification robots.txt,
+gouvernement-budget,gouvernement,page_web,https://www.budget.gouv.fr/,auto,hebdo,fr,primaire,na,false,Communiqués et dossiers de presse du budget ; URL précise à renseigner,

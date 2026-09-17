@@ -37,3 +37,6 @@ cfdt,CFDT,organisation,,na,na,,P2,hebdo,,,Site à renseigner,true,Elora Lazaar,2
 fo,Force ouvrière,organisation,,na,na,,P2,hebdo,,,Site à renseigner,true,Elora Lazaar,2026-09-14
 assemblee-nationale,Assemblée nationale – commission des finances,institution,,na,na,,P1,hebdo,,,"Comptes rendus, propositions de loi, données ouvertes",true,Elora Lazaar,2026-09-14
 senat,Sénat – commission des finances,institution,,na,na,,P2,hebdo,,,Rapports et comptes rendus,true,Elora Lazaar,2026-09-14
+gouvernement,Gouvernement / PLF 2027,institution,,na,na,,P1,quotidien,https://www.budget.gouv.fr/,,"Mesures budgétaires en cours (PLF/PLFSS 2027) : dons familiaux, donations temporaires, désindexation…",true,Elora Lazaar,2026-09-17
+fondation-ifrap,Fondation iFRAP,think_tank,,na,na,,P1,hebdo,https://www.ifrap.org/,https://www.ifrap.org/comparateurs/presidentielles-2027,Think tank libéral ; comparateur de programmes et chiffrages,true,Elora Lazaar,2026-09-17
+zemmour-eric,Éric Zemmour,candidat,Reconquête,droite_nationale,a_confirmer,,P3,mensuel,,,Non déclaré à la date du 17/09/2026 ; propositions détaillées dans le JDD et iFRAP,true,Elora Lazaar,2026-09-17

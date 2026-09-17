@@ -1,4 +1,4 @@
--- veille-patrimoine — chargement du référentiel dans Supabase
+-- veille-patrimoine — chargement du référentiel dans Supabase (v2026-09-17)
 -- À exécuter APRÈS schema.sql, dans SQL Editor. Ré-exécutable (upsert).
 
 insert into acteurs (acteur_id,nom,type,organisation,camp,statut,date_statut,priorite,frequence_veille,site_officiel,url_programme,notes,actif,maj_par,maj_le) values
@@ -39,7 +39,10 @@ insert into acteurs (acteur_id,nom,type,organisation,camp,statut,date_statut,pri
   ('cfdt','CFDT','organisation',null,'na','na',null,'P2','hebdo',null,null,'Site à renseigner',true,'Elora Lazaar','2026-09-14'),
   ('fo','Force ouvrière','organisation',null,'na','na',null,'P2','hebdo',null,null,'Site à renseigner',true,'Elora Lazaar','2026-09-14'),
   ('assemblee-nationale','Assemblée nationale – commission des finances','institution',null,'na','na',null,'P1','hebdo',null,null,'Comptes rendus, propositions de loi, données ouvertes',true,'Elora Lazaar','2026-09-14'),
-  ('senat','Sénat – commission des finances','institution',null,'na','na',null,'P2','hebdo',null,null,'Rapports et comptes rendus',true,'Elora Lazaar','2026-09-14')
+  ('senat','Sénat – commission des finances','institution',null,'na','na',null,'P2','hebdo',null,null,'Rapports et comptes rendus',true,'Elora Lazaar','2026-09-14'),
+  ('gouvernement','Gouvernement / PLF 2027','institution',null,'na','na',null,'P1','quotidien','https://www.budget.gouv.fr/',null,'Mesures budgétaires en cours (PLF/PLFSS 2027) : dons familiaux, donations temporaires, désindexation…',true,'Elora Lazaar','2026-09-17'),
+  ('fondation-ifrap','Fondation iFRAP','think_tank',null,'na','na',null,'P1','hebdo','https://www.ifrap.org/','https://www.ifrap.org/comparateurs/presidentielles-2027','Think tank libéral ; comparateur de programmes et chiffrages',true,'Elora Lazaar','2026-09-17'),
+  ('zemmour-eric','Éric Zemmour','candidat','Reconquête','droite_nationale','a_confirmer',null,'P3','mensuel',null,null,'Non déclaré à la date du 17/09/2026 ; propositions détaillées dans le JDD et iFRAP',true,'Elora Lazaar','2026-09-17')
 on conflict (acteur_id) do update set
   nom=excluded.nom, type=excluded.type, organisation=excluded.organisation, camp=excluded.camp, statut=excluded.statut,
   date_statut=excluded.date_statut, priorite=excluded.priorite, frequence_veille=excluded.frequence_veille,
@@ -99,7 +102,9 @@ insert into sources (source_id,acteur_id,type_source,url,mode_collecte,frequence
   ('labib-selma-programme','labib-selma','pdf',null,'manuel','mensuel','fr','primaire','na',false,'Programme publié uniquement ; veille mensuelle'),
   ('branco-juan-programme','branco-juan','pdf',null,'manuel','mensuel','fr','primaire','na',false,'Programme publié uniquement ; veille mensuelle'),
   ('egger-clara-programme','egger-clara','pdf',null,'manuel','mensuel','fr','primaire','na',false,'Programme publié uniquement ; veille mensuelle'),
-  ('massard-lydie-programme','massard-lydie','pdf',null,'manuel','mensuel','fr','primaire','na',false,'Programme publié uniquement ; veille mensuelle')
+  ('massard-lydie-programme','massard-lydie','pdf',null,'manuel','mensuel','fr','primaire','na',false,'Programme publié uniquement ; veille mensuelle'),
+  ('ifrap-comparateur','fondation-ifrap','page_web','https://www.ifrap.org/comparateurs/presidentielles-2027','auto','hebdo','fr','secondaire','na',false,'Surveillance des changements du comparateur ; à activer après vérification robots.txt'),
+  ('gouvernement-budget','gouvernement','page_web','https://www.budget.gouv.fr/','auto','hebdo','fr','primaire','na',false,'Communiqués et dossiers de presse du budget ; URL précise à renseigner')
 on conflict (source_id) do update set
   acteur_id=excluded.acteur_id, type_source=excluded.type_source, url=excluded.url, mode_collecte=excluded.mode_collecte,
   frequence=excluded.frequence, langue=excluded.langue, fiabilite=excluded.fiabilite, robots_ok=excluded.robots_ok,
