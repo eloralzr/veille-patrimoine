@@ -1,8 +1,9 @@
 name: Collecte et extraction quotidiennes
 
 on:
-  schedule:
-    - cron: "0 4 * * *"        # 04:00 UTC = 06:00 Paris (été) / 05:00 (hiver)
+     schedule:
+       - cron: "23 4 * * *"    # 06:23 Paris
+       - cron: "23 10 * * *"   # 12:23 Paris, rattrapage si le premier n'a pas tourné
   workflow_dispatch:
     inputs:
       max_docs:
