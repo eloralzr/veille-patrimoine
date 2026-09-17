@@ -288,5 +288,91 @@
     "confiance": "eleve",
     "saisi_par": "auto:gemini",
     "cree_le": "2026-09-16T16:19:48.152922+00:00"
+  },
+  {
+    "id": "3eff121a-37aa-4028-b34a-e618b92f7459",
+    "acteur_id": "glucksmann-raphael",
+    "theme_id": "transmission",
+    "sous_theme_id": "droits_succession",
+    "mots_cles": [
+      "droits de succession",
+      "méga-héritages",
+      "héritage",
+      "fiscalité des successions"
+    ],
+    "titre": "Augmentation de la fiscalité sur les successions et méga-héritages",
+    "resume": "Raphaël Glucksmann propose d'accroître la fiscalité des successions en ciblant particulièrement les méga-héritages. Il justifie cette mesure par la hausse de la part de la fortune héritée dans le patrimoine des Français et souhaite lutter contre le renforcement des inégalités patrimoniales. L'objectif affiché est de redonner de la valeur au travail face au patrimoine hérité.",
+    "citation": "engagement en faveur d’un accroissement de la fiscalité des successions",
+    "nature": "engagement",
+    "impact_client": "Hausse potentielle des droits de mutation à titre gratuit lors de la transmission de patrimoines importants.",
+    "url_source": "https://www.mercipourlinfo.fr/actualites/argent/successions-que-proposent-les-possibles-candidats-a-lelection-presidentielle-1156728",
+    "date_source": "2026-09-09",
+    "confiance": "moyen",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-17T07:04:29.308981+00:00"
+  },
+  {
+    "id": "6fbaaf18-0c85-4ef3-ae7c-d5d27fd883a2",
+    "acteur_id": "philippe-edouard",
+    "theme_id": "protection",
+    "sous_theme_id": "retraite",
+    "mots_cles": [
+      "retraite",
+      "durée de cotisation",
+      "partenaires sociaux",
+      "réforme des retraites"
+    ],
+    "titre": "Allongement de la durée de travail pour financer les retraites",
+    "resume": "Édouard Philippe préconise d'allonger la durée d'activité des Français afin d'assurer l'équilibre financier et la pérennité du système de retraite par répartition. Il propose d'engager une concertation avec les partenaires sociaux pour en définir les modalités, dans un contexte de fortes contraintes sur les finances publiques.",
+    "citation": "les Français devront travailler plus longtemps pour garantir la pérennité du système de retraite",
+    "nature": "engagement",
+    "impact_client": "Les actifs doivent anticiper un éventuel allongement de la durée de cotisation requise pour un départ à taux plein.",
+    "url_source": "https://www.bdor.fr/actualites-or/retraites-edouard-philippe-travailler-plus-longtemps",
+    "date_source": "2026-09-13",
+    "confiance": "moyen",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-17T07:04:50.984703+00:00"
+  },
+  {
+    "id": "d0bc8017-c3b9-4212-bbfd-77e21b0432d3",
+    "acteur_id": "melenchon-jean-luc",
+    "theme_id": "protection",
+    "sous_theme_id": "retraite",
+    "mots_cles": [
+      "âge de départ",
+      "réforme des retraites",
+      "retraite"
+    ],
+    "titre": "Abaisser l'âge légal de départ à la retraite à 60 ans",
+    "resume": "Jean-Luc Mélenchon et La France insoumise réaffirment leur engagement de ramener l'âge légal de départ à la retraite à 60 ans. L'argumentaire s'appuie sur une faisabilité économique reposant sur une nouvelle redistribution des richesses. La mesure vise l'ensemble de la population active.",
+    "citation": "abaisser l’âge légal de départ à la retraite à 60 ans",
+    "nature": "engagement",
+    "impact_client": "Les actifs pourraient faire valoir leurs droits à la retraite à taux plein dès l'âge de 60 ans.",
+    "url_source": "https://www.nextplz.fr/societe/573272-age-de-depart-a-la-retraite-avance-a-60-ans-leconomie-francaise-peut-se-le-permettre-affirme-bally-bagayoko-maire-lfi-de-saint-denis",
+    "date_source": "2026-09-16",
+    "confiance": "eleve",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-17T07:07:39.183422+00:00"
+  },
+  {
+    "id": "c90e245b-8793-4787-860e-f1e0e40c35dc",
+    "acteur_id": "melenchon-jean-luc",
+    "theme_id": "fiscalite",
+    "sous_theme_id": "ifi_fortune",
+    "mots_cles": [
+      "patrimoine des ultra-riches",
+      "imposition de la fortune",
+      "grandes fortunes"
+    ],
+    "titre": "Accroître la contribution fiscale des grandes fortunes",
+    "resume": "Afin de financer des mesures sociales comme le retour de la retraite à 60 ans, la ligne défendue par le mouvement cible une contribution accrue des ménages détenant les plus hauts patrimoines. Les mécanismes précis d'imposition restent à détailler.",
+    "citation": "cette minorité qui détient d’importants patrimoines doit davantage contribuer à la collectivité",
+    "nature": "engagement",
+    "impact_client": "Les contribuables détenant des patrimoines très élevés feraient face à une hausse de la fiscalité sur la fortune.",
+    "url_source": "https://www.nextplz.fr/societe/573272-age-de-depart-a-la-retraite-avance-a-60-ans-leconomie-francaise-peut-se-le-permettre-affirme-bally-bagayoko-maire-lfi-de-saint-denis",
+    "date_source": "2026-09-16",
+    "confiance": "moyen",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-17T07:07:39.183422+00:00"
   }
 ]
