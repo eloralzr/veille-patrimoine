@@ -1,9 +1,9 @@
 name: Collecte et extraction quotidiennes
 
 on:
-     schedule:
-       - cron: "23 4 * * *"    # 06:23 Paris
-       - cron: "23 10 * * *"   # 12:23 Paris, rattrapage si le premier n'a pas tourné
+  schedule:
+    - cron: "23 4 * * *"    # 06:23 Paris (heure d'été)
+    - cron: "23 10 * * *"   # 12:23 Paris, rattrapage
   workflow_dispatch:
     inputs:
       max_docs:
@@ -14,7 +14,6 @@ on:
         description: "Extraction seule (true/false)"
         default: "false"
         required: false
-
 concurrency:
   group: collecte
   cancel-in-progress: false
