@@ -3,7 +3,7 @@ name: Collecte et extraction quotidiennes
 on:
   schedule:
     - cron: "23 4 * * *"    # 06:23 Paris (heure d'été)
-    - cron: "23 10 * * *"   # 12:23 Paris, rattrapage
+    - cron: "23 10 * * *"   # 12:23 Paris, rattrapage si le premier n'a pas tourné
   workflow_dispatch:
     inputs:
       max_docs:
@@ -14,6 +14,7 @@ on:
         description: "Extraction seule (true/false)"
         default: "false"
         required: false
+
 concurrency:
   group: collecte
   cancel-in-progress: false
@@ -45,10 +46,10 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           LLM_FOURNISSEUR: ${{ vars.LLM_FOURNISSEUR || 'gemini' }}
           LLM_MODELE: ${{ vars.LLM_MODELE }}
-          MAX_DOCS: ${{ github.event.inputs.max_docs || '40' }}
+          MAX_DOCS: ${{ inputs.max_docs || '40' }}
         run: |
           ARGS=""
-          if [ "${{ github.event.inputs.sans_collecte }}" = "true" ]; then ARGS="--sans-collecte"; fi
+          if [ "${{ inputs.sans_collecte }}" = "true" ]; then ARGS="--sans-collecte"; fi
           python jobs/run_collecte.py $ARGS
 
       - name: Publier les exports du jour dans le dépôt
@@ -60,4 +61,3 @@ jobs:
           git commit -m "exports: fiches du $(date -u +%F)"
           git pull --rebase origin main || true
           git push
-
