@@ -374,5 +374,92 @@
     "confiance": "moyen",
     "saisi_par": "auto:gemini",
     "cree_le": "2026-09-17T07:07:39.183422+00:00"
+  },
+  {
+    "id": "760d8983-014a-48bb-b3ef-e72c3f64b747",
+    "acteur_id": "le-pen-marine",
+    "theme_id": "protection",
+    "sous_theme_id": "retraite",
+    "mots_cles": [
+      "retraite",
+      "pension",
+      "indexation",
+      "pouvoir d'achat"
+    ],
+    "titre": "Indexation des pensions de retraite sur l'inflation",
+    "resume": "Marine Le Pen s'oppose à l'absence de revalorisation des pensions de retraite en contestant le manque de marges budgétaires de l'État. Elle préconise d'affecter les priorités financières à l'indexation des retraites plutôt qu'à la contribution nette de la France à l'Union européenne.",
+    "citation": "On ne peut pas dire qu'il n'y a pas un euro pour indexer les retraites",
+    "nature": "reaction",
+    "impact_client": "Revalorisation garantie des pensions de retraite pour préserver le pouvoir d'achat face à l'inflation.",
+    "url_source": "https://www.cnews.fr/france/2026-09-17/presidentielle-2027-ne-peut-pas-dire-quil-ny-pas-un-euro-pour-indexer-les",
+    "date_source": "2026-09-17",
+    "confiance": "moyen",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-18T12:10:14.948081+00:00"
+  },
+  {
+    "id": "5f179e8e-851b-4ecc-b806-e8117b8e1c9f",
+    "acteur_id": "attal-gabriel",
+    "theme_id": "fiscalite",
+    "sous_theme_id": "remuneration_dirigeant",
+    "mots_cles": [
+      "impôt sur les sociétés",
+      "concurrence fiscale",
+      "Union européenne",
+      "fiscalité"
+    ],
+    "titre": "Limitation de la concurrence européenne sur l'impôt sur les sociétés",
+    "resume": "Gabriel Attal suggère de supprimer certaines barrières fiscales et de limiter la concurrence en matière d'impôt sur les sociétés au sein de l'Union européenne. Cette piste s'inscrit dans sa volonté de rapprocher les économies européennes d'un noyau dur d'États pour renforcer la compétitivité face aux blocs américain et chinois. L'objectif est de créer une économie plus unifiée et de mettre fin au dumping fiscal intra-européen.",
+    "citation": "limiter la concurrence en matière d'impôt sur les sociétés",
+    "nature": "piste",
+    "impact_client": "Une harmonisation de l'impôt sur les sociétés au niveau européen limiterait les opportunités d'arbitrage et d'optimisation fiscale transfrontalière pour les entreprises.",
+    "url_source": "https://www.capital.fr/economie-politique/fiscalite-industrie-energie-gabriel-attal-veut-rapprocher-les-economies-europeennes-1530246",
+    "date_source": "2026-09-18",
+    "confiance": "incertain",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-18T12:12:09.256022+00:00"
+  },
+  {
+    "id": "ac0f97e2-46f0-437c-9874-6c7b9ff065b6",
+    "acteur_id": "glucksmann-raphael",
+    "theme_id": "transmission",
+    "sous_theme_id": "droits_succession",
+    "mots_cles": [
+      "société d'héritiers",
+      "droits de succession",
+      "rente",
+      "patrimoine hérité"
+    ],
+    "titre": "Valorisation du travail face à la rente et taxation des héritages",
+    "resume": "Dans une tribune de soutien à Raphaël Glucksmann, les signataires défendent une orientation visant à ce que le travail rémunère davantage que la rente. L'objectif est d'empêcher que la France ne devienne une société d'héritiers. Les modalités fiscales précises relatives aux successions ne sont pas détaillées dans le texte.",
+    "citation": "ne devienne pas une société d’héritiers, mais à nouveau une société où le travail paye plus que la rente",
+    "nature": "piste",
+    "impact_client": "Éventuel renforcement futur de la fiscalité pesant sur les transmissions et le patrimoine hérité au profit des revenus du travail.",
+    "url_source": "https://www.latribune.fr/article/la-tribune-dimanche/opinions/17131657444996/tribune-pres-de-300-elus-et-responsables-socialistes-appellent-a-voter-raphael-glucksmann-pour-la-primaire",
+    "date_source": "2026-09-16",
+    "confiance": "incertain",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-18T12:13:34.279404+00:00"
+  },
+  {
+    "id": "c68531e2-d98d-4222-9990-1b12fa68853e",
+    "acteur_id": "glucksmann-raphael",
+    "theme_id": "protection",
+    "sous_theme_id": "dependance",
+    "mots_cles": [
+      "EHPAD",
+      "dépendance",
+      "grand âge"
+    ],
+    "titre": "Démarchandisation des EHPAD",
+    "resume": "La tribune soutenant Raphaël Glucksmann prône la démarchandisation des EHPAD pour soustraire le grand âge aux logiques financières marchandes. Aucune précision n'est donnée quant aux modalités d'application ou de financement. La mesure s'inscrit dans un objectif général d'amélioration des services publics d'accompagnement.",
+    "citation": "Une vision pour démarchandiser les EHPAD et les crèches",
+    "nature": "piste",
+    "impact_client": "Évolution potentielle du paysage de la prise en charge de la dépendance avec une réduction du secteur privé lucratif.",
+    "url_source": "https://www.latribune.fr/article/la-tribune-dimanche/opinions/17131657444996/tribune-pres-de-300-elus-et-responsables-socialistes-appellent-a-voter-raphael-glucksmann-pour-la-primaire",
+    "date_source": "2026-09-16",
+    "confiance": "incertain",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-18T12:13:34.279404+00:00"
   }
 ]
