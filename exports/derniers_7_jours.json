@@ -461,5 +461,70 @@
     "confiance": "incertain",
     "saisi_par": "auto:gemini",
     "cree_le": "2026-09-18T12:13:34.279404+00:00"
+  },
+  {
+    "id": "f76becdb-8a6c-4a98-a170-b463f2402150",
+    "acteur_id": "attal-gabriel",
+    "theme_id": "fiscalite",
+    "sous_theme_id": "remuneration_dirigeant",
+    "mots_cles": [
+      "impôt sur les sociétés",
+      "fiscalité",
+      "concurrence fiscale",
+      "Union européenne"
+    ],
+    "titre": "Rapprochement de la fiscalité des entreprises au sein d'un noyau européen",
+    "resume": "Gabriel Attal propose de rapprocher la fiscalité des entreprises, et notamment l'impôt sur les sociétés, entre les pays d'un noyau dur européen. L'objectif est de limiter la concurrence fiscale interne et d'éliminer les barrières qui fragmentent les économies du continent. Cette harmonisation s'inscrirait dans la création d'une économie unique européenne.",
+    "citation": "rapprocher leur fiscalité afin de limiter la concurrence en matière d'impôt sur les sociétés",
+    "nature": "engagement",
+    "impact_client": "Les entreprises et dirigeants exerçant à l'échelle européenne verraient la fiscalité sur les sociétés progressivement harmonisée entre pays membres volontaires.",
+    "url_source": "https://www.bfmtv.com/economie/economie-social/il-veut-des-etats-unis-d-europe-pour-en-faire-la-1ere-puissance-mondiale-gabriel-attal-propose-de-creer-une-economie-unique-pour-lutter-contre-etats-unis-et-chine_AV-202609170647.html",
+    "date_source": "2026-09-17",
+    "confiance": "moyen",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-19T08:54:27.567804+00:00"
+  },
+  {
+    "id": "54eea51f-3cd3-4aba-9f9f-63a1c11bc7e6",
+    "acteur_id": "retailleau-bruno",
+    "theme_id": "fiscalite",
+    "sous_theme_id": "immobilier",
+    "mots_cles": [
+      "encadrement des loyers",
+      "DPE",
+      "statut du bailleur privé",
+      "passoires thermiques"
+    ],
+    "titre": "Suppression de l'encadrement des loyers et des interdictions de louer",
+    "resume": "Bruno Retailleau propose d'abroger l'encadrement des loyers ainsi que l'interdiction progressive de louer les logements mal isolés liée au DPE. L'objectif est d'assouplir les contraintes pesant sur les propriétaires bailleurs et d'encourager l'offre locative.",
+    "citation": "supprimer l’encadrement des loyers et l’interdiction progressive de louer des logements mal isolés.",
+    "nature": "engagement",
+    "impact_client": "Les propriétaires bailleurs retrouveraient la liberté de fixer leurs loyers et la possibilité de louer sans obligation préalable de rénovation énergétique.",
+    "url_source": "https://www.lopinion.fr/politique/pouvoir-dachat-des-mesures-ecolos-dans-le-viseur-de-bruno-retailleau",
+    "date_source": "2026-09-15",
+    "confiance": "moyen",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-19T08:54:53.876051+00:00"
+  },
+  {
+    "id": "63094546-f35e-46aa-9dae-53b4c3cf4e61",
+    "acteur_id": "royal-segolene",
+    "theme_id": "protection",
+    "sous_theme_id": "retraite",
+    "mots_cles": [
+      "réforme des retraites",
+      "retraite",
+      "réindustrialisation"
+    ],
+    "titre": "Conditionner toute évolution des retraites à la réindustrialisation du pays",
+    "resume": "Ségolène Royal s'engage à ne mener aucune nouvelle réforme des retraites avant d'avoir préalable réindustrialisé la France. Elle souhaite appuyer cette stratégie industrielle sur la transition climatique, considérée comme le moteur de la relance économique.",
+    "citation": "Je ne touche pas aux retraites tant que je n’ai pas réindustrialisé le pays",
+    "nature": "engagement",
+    "impact_client": "Stabilité temporaire du cadre légal des retraites, sans ajustement des paramètres ou des règles de départ à court terme.",
+    "url_source": "https://www.capital.fr/economie-politique/je-veux-baisser-les-taxes-segolene-royal-affirme-qu-un-litre-dessence-ne-doit-pas-depasser-170-euro-1530093",
+    "date_source": "2026-09-13",
+    "confiance": "moyen",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-19T08:55:04.690107+00:00"
   }
 ]
