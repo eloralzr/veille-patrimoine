@@ -1,0 +1,24 @@
+[
+  {
+    "id": "af7cd1c5-a59c-4f6f-b604-9af2e30d4027",
+    "acteur_id": "le-pen-marine",
+    "theme_id": "protection",
+    "sous_theme_id": "retraite",
+    "mots_cles": [
+      "retraite",
+      "pension",
+      "indexation",
+      "pouvoir d'achat"
+    ],
+    "titre": "Opposition à la désindexation des pensions de retraite",
+    "resume": "Le Rassemblement national s'oppose à toute désindexation des pensions de retraite dans le cadre des négociations du budget 2027. Le parti de Marine Le Pen fait du maintien du pouvoir d'achat des retraités une ligne rouge face aux pistes d'économies de l'exécutif. Il exige le respect strict de l'indexation des pensions sur l'inflation.",
+    "citation": "Il n’est pas question que les retraites ne soient pas indexées",
+    "nature": "reaction",
+    "impact_client": "Garantie du maintien du pouvoir d'achat des pensions de retraite calculées en fonction de l'inflation.",
+    "url_source": "https://www.capital.fr/votre-retraite/il-n-est-pas-question-que-les-retraites-ne-soient-pas-indexees-laure-lavalette-pose-les-conditions-du-rn-au-budget-1530230",
+    "date_source": "2026-09-17",
+    "confiance": "incertain",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-20T09:22:49.393671+00:00"
+  }
+]
