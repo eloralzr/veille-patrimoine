@@ -71,6 +71,22 @@ presse:
   fenetre_jours: 7
   stade_par_defaut: annonce          # avant le dépôt du texte ; passer à 'texte_initial' ou laisser le LLM décider ensuite
   chambre_par_defaut: gouvernement
+  # Flux généralistes d'éditeurs (Les Échos, Le Figaro, Le Monde…) : une entrée n'est gardée que si son titre ou son
+  # résumé contient l'un de ces mots ; les requêtes Google Actualités sont déjà ciblées et ne sont pas filtrées ici.
+  mots_cles_titre:
+    - PLF
+    - PLFSS
+    - budget 2027
+    - loi de finances
+    - financement de la sécurité sociale
+    - Bercy
+    - niche fiscale
+    - fiscalité
+    - impôt
+    - succession
+    - assurance-vie
+    - retraite
+    - CSG
 
 # Filtrage thématique avant appel LLM : un amendement n'est envoyé à l'extraction que si son dispositif
 # ou son exposé sommaire contient au moins un mot-clé de la taxonomie (data/taxonomie.yaml)

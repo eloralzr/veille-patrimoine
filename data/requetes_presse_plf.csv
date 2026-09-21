@@ -5,3 +5,10 @@ plfss-2027,gouvernement-plf,plfss,PLFSS 2027 · financement de la sécurité soc
 plfss-2027-patrimoine,gouvernement-plf,plfss,"PLFSS 2027 · prélèvements sociaux, retraite, dépendance",https://news.google.com/rss/search?q=%22PLFSS%202027%22%20%28CSG%20OR%20%22pr%C3%A9l%C3%A8vements%20sociaux%22%20OR%20retraites%20OR%20d%C3%A9pendance%20OR%20%22grand%20%C3%A2ge%22%20OR%20cotisations%29&hl=fr&gl=FR&ceid=FR:fr,true
 commission-finances-an,an-commission-finances,plf,Commission des finances AN · budget 2027,https://news.google.com/rss/search?q=%22commission%20des%20finances%22%20%22budget%202027%22%20OR%20%22rapporteur%20g%C3%A9n%C3%A9ral%22%20%22budget%202027%22&hl=fr&gl=FR&ceid=FR:fr,true
 commission-finances-senat,senat-commission-finances,plf,Commission des finances Sénat · budget 2027,https://news.google.com/rss/search?q=S%C3%A9nat%20%22commission%20des%20finances%22%20%22budget%202027%22&hl=fr&gl=FR&ceid=FR:fr,true
+lesechos-economie,gouvernement-plf,plf,Les Échos · Économie France (flux direct),https://services.lesechos.fr/rss/les-echos-economie.xml,true
+lefigaro-economie,gouvernement-plf,plf,Le Figaro · Économie (flux direct),https://www.lefigaro.fr/rss/figaro_economie.xml,true
+lemonde-economie,gouvernement-plf,plf,Le Monde · Économie (flux direct),https://www.lemonde.fr/economie/rss_full.xml,true
+lemonde-politique,gouvernement-plf,plf,Le Monde · Politique (flux direct),https://www.lemonde.fr/politique/rss_full.xml,true
+publicsenat,senat-commission-finances,plf,Public Sénat (flux direct — URL à vérifier),https://www.publicsenat.fr/rss.xml,false
+lcp,an-commission-finances,plf,LCP (flux direct — URL à vérifier),https://lcp.fr/rss.xml,false
+vie-publique,gouvernement-plf,plf,vie-publique.fr (flux direct — URL à vérifier),https://www.vie-publique.fr/rss/actualites,false
