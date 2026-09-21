@@ -1,6 +1,6 @@
 # Chantier « Veille PLF / PLFSS 2027 » — kit d'intégration dans `veille-patrimoine`
 
-Propriétaire : Elora Lazaar · Kit du 2026-09-21 · Cible : dépôt https://github.com/eloralzr/veille-patrimoine (v0.9)
+Propriétaire : Elora Lazaar · Kit du 2026-09-21 (b : presse + stade « annonce ») · Cible : dépôt https://github.com/eloralzr/veille-patrimoine (v0.9)
 
 Ce kit ajoute au pipeline nocturne la collecte et l'extraction des textes budgétaires, en parallèle de la
 veille programmes (rien n'est modifié dans `collecte/rss.py`, `extraction/llm.py`, `jobs/run_collecte.py`).
@@ -14,13 +14,23 @@ Les fiches produites sont importées dans l'espace **PLF · PLFSS 2027** de l'ar
 | `data/acteurs_plf.csv` | 31 acteurs parlementaires et institutionnels (Gouvernement, commissions, CMP, CC, CE, HCFP, Cour des comptes, 12 groupes AN, 9 groupes Sénat) avec effectifs, sources officielles et codes AN (`code_an`) | `data/` |
 | `data/taxonomie_plf.yaml` | Listes fermées : `natures_position`, `textes`, `chambres`, `stades`, `sorts` (thèmes communs : `taxonomie.yaml`) | `data/` |
 | `data/sources_plf.yaml` | Configuration de collecte : identifiants des dossiers, URL des données ouvertes, correspondance groupes → `acteur_id`, mots-clés presse, filtre | `data/` |
-| `collecte/plf.py` | Collecteurs : amendements AN (données ouvertes), texte initial (PDF/HTML découpé par article), amendements Sénat (HTML, phase 1) | `collecte/` |
+| `collecte/plf.py` | Collecteurs : amendements AN (données ouvertes), texte initial (PDF/HTML découpé par article), amendements Sénat (HTML, phase 1) ; appelle la presse | `collecte/` |
+| `collecte/plf_presse.py` | Presse : flux Google Actualités PLF/PLFSS (data/requetes_presse_plf.csv) via `collecte/rss.py` — **produit des fiches dès aujourd'hui**, stade `annonce` | `collecte/` |
+| `data/requetes_presse_plf.csv` | 6 requêtes Google Actualités (PLF, PLFSS, patrimoine, commissions des finances) | `data/` |
 | `extraction/prompts_plf.py` | Prompt d'extraction législatif, **identique** à celui de la page de l'artefact | `extraction/` |
 | `extraction/schema_plf.py` | Chargement du référentiel PLF, validation et normalisation des fiches (miroir de la page) | `extraction/` |
 | `jobs/run_collecte_plf.py` | Job : collecte → nouveauté → LLM → validation → `exports/fiches_plf_AAAA-MM-JJ.json` (+ `refus_plf_…json`) | `jobs/` |
 | `.github/workflows/collecte_plf.yml` | Exécution quotidienne 04h30 UTC + déclenchement manuel (option `dry_run`) | `.github/workflows/` |
 | `tests/test_schema_plf.py` | 4 tests : référentiel, fiche valide, refus, normalisation | `tests/` |
 | `docs/PROJET-import-veille.md` | Instructions du Projet Claude **v17c** (mode « Import PLF ») — à coller aussi dans Projects → Instructions et à remplacer dans les fichiers du Projet | `docs/` |
+
+## Avant le dépôt du texte : la presse suffit à amorcer
+
+Le stade `annonce` (« Annonce préalable au dépôt ») a été ajouté au référentiel PLF (page de l'artefact v2026-09-21b et
+`data/taxonomie_plf.yaml`). Tant que le PLF n'est pas déposé, le robot ne lit que la presse : les mesures annoncées par
+le Gouvernement sortent en `disposition_initiale` / stade `annonce`, les prises de position des groupes et organisations
+en `reaction`. Confiance `moyen` au mieux (source secondaire). Au dépôt du texte, les fiches officielles viendront
+confirmer ou remplacer ces annonces (mise à jour explicite du stade lors de l'import, voir v17c).
 
 ## Intégration en six étapes
 
