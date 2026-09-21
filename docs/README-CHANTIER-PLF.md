@@ -26,9 +26,8 @@ Les fiches produites sont importées dans l'espace **PLF · PLFSS 2027** de l'ar
 
 1. **Déposer les fichiers** aux emplacements du tableau ; ajouter `pdfplumber` (ou `pypdf`) à `requirements.txt`
    si absent ; s'assurer que `collecte/`, `extraction/`, `jobs/` ont un `__init__.py`.
-2. **Brancher le LLM** : dans `jobs/run_collecte_plf.py`, fonction `appeler_llm`, remplacer les deux lignes `TODO`
-   par l'appel réellement exposé par `extraction/llm.py` (celui de `jobs/run_collecte.py`) et le nom du modèle,
-   afin que `saisi_par = auto:<modèle>` soit cohérent avec la veille programmes.
+2. **LLM** : déjà branché sur `extraction/llm.py` (`llm.appeler`, `llm.fournisseur_courant`). Le workflow reprend
+   les mêmes secrets et variables que `collecte.yml` ; aucun nouveau secret à créer si la veille programmes tourne.
 3. **Vérifier les données ouvertes de l'AN** (avant la première exécution réelle) : télécharger le zip indiqué
    dans `sources_plf.yaml`, ouvrir un amendement JSON et confronter les chemins lus par `collecte/plf.py`
    (`_texte_amendement`, `_acteur_amendement`, `_stade_amendement`, `_sort_amendement`, `_date_amendement`,
