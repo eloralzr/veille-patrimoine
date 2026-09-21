@@ -1,4 +1,4 @@
-version: '2026-09-21'
+version: 2026-09-21b
 note: 'Effectifs AN (XVIIe législature) et Sénat relevés sur les pages officielles
   le 2026-09-21 ; la page Sénat date du 2026-09-20. Renouvellement sénatorial de septembre
   2026 : mettre à jour les groupes du Sénat après la constitution des nouveaux groupes
@@ -21,6 +21,8 @@ chambres:
 - id: na
   libelle: Hors Parlement
 stades:
+- id: annonce
+  libelle: Annonce préalable au dépôt
 - id: texte_initial
   libelle: Texte initial
 - id: depose
@@ -55,7 +57,8 @@ sorts:
 natures_position:
 - id: disposition_initiale
   libelle: Disposition du texte initial
-  definition: Article ou mesure du projet de loi tel que déposé par le Gouvernement
+  definition: Article ou mesure du projet de loi tel que déposé par le Gouvernement,
+    ou mesure annoncée par le Gouvernement avant le dépôt (stade « annonce »)
 - id: amendement
   libelle: Amendement
   definition: Amendement déposé par un groupe, un rapporteur, une commission ou le

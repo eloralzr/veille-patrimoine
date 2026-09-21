@@ -1,7 +1,7 @@
 # Sources de collecte — veille PLF / PLFSS 2027
 # Chaque URL marquée "a_verifier: true" doit être confirmée à la main avant la première exécution :
 # les adresses des jeux de données ouvertes changent avec la législature et la session.
-version: '2026-09-21'
+version: '2026-09-21b'
 
 # Identifiants du dossier législatif (à renseigner dès le dépôt du texte, début octobre 2026)
 dossiers:
@@ -64,22 +64,13 @@ senat:
     GEST: senat-gest
     RASNAG: senat-rasnag
 
-# Flux RSS et requêtes presse : réutilisent collecte/rss.py avec ces mots-clés supplémentaires
+# Presse : flux Google Actualités listés dans data/requetes_presse_plf.csv (même mécanique que requetes_presse.csv),
+# lus par collecte/plf_presse.py qui réutilise les fonctions de collecte/rss.py (texte intégral, domaines exclus).
 presse:
-  mots_cles:
-    - PLF 2027
-    - projet de loi de finances 2027
-    - PLFSS 2027
-    - budget 2027
-    - amendement
-    - commission des finances
-    - rapporteur général
-    - niche fiscale
-    - prélèvements sociaux
-  flux:
-    - https://www.budget.gouv.fr/rss            # à vérifier
-    - https://www.senat.fr/flux-rss.html        # page d'index des flux du Sénat : choisir "Commission des finances"
-    - https://www2.assemblee-nationale.fr/dyn/les-fils-rss-de-l-assemblee-nationale   # page d'index des flux de l'AN
+  requetes_csv: data/requetes_presse_plf.csv
+  fenetre_jours: 7
+  stade_par_defaut: annonce          # avant le dépôt du texte ; passer à 'texte_initial' ou laisser le LLM décider ensuite
+  chambre_par_defaut: gouvernement
 
 # Filtrage thématique avant appel LLM : un amendement n'est envoyé à l'extraction que si son dispositif
 # ou son exposé sommaire contient au moins un mot-clé de la taxonomie (data/taxonomie.yaml)
