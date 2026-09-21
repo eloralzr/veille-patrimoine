@@ -30,9 +30,39 @@ def _requetes(cfg: dict) -> list[dict]:
         return [r for r in csv.DictReader(f) if str(r.get("actif", "true")).lower() == "true" and r.get("url_rss")]
 
 
+def _resoudre(url: str) -> str:
+    """Adresse réelle de l'article : décodeur pour Google Actualités, paramètre `url` pour Bing Actualités, sinon inchangée."""
+    if "news.google.com" in url:
+        return rss.resoudre_url(url)
+    if "bing.com/news/apiclick" in url:
+        from urllib.parse import parse_qs, unquote, urlparse
+        cible = parse_qs(urlparse(url).query).get("url", [""])[0]
+        return unquote(cible) if cible.startswith("http") else url
+    return url
+
+
 def _pertinent_titre(titre: str, resume: str, mots_titre: list[str]) -> bool:
     t = f"{titre} {resume}".lower()
     return any(m.lower() in t for m in mots_titre)
+
+
+_diag_fait = False
+
+
+def _diagnostic_decodeur(url: str, titre: str) -> None:
+    """Une seule fois par exécution : écrit dans le journal ce que renvoie réellement le décodeur Google Actualités."""
+    global _diag_fait
+    if _diag_fait:
+        log.info("lien Google Actualités non résolu, ignoré : %s", titre[:80]); return
+    _diag_fait = True
+    try:
+        import googlenewsdecoder
+        from googlenewsdecoder import gnewsdecoder
+        version = getattr(googlenewsdecoder, "__version__", "?")
+        res = gnewsdecoder(url, interval=1)
+        log.warning("DIAGNOSTIC décodeur Google (googlenewsdecoder %s) : réponse = %s", version, str(res)[:400])
+    except Exception as ex:  # noqa: BLE001
+        log.warning("DIAGNOSTIC décodeur Google : exception %s : %s", type(ex).__name__, ex)
 
 
 def presse(cfg: dict, mots: list[str], recuperer_texte: bool = True) -> Iterable[dict]:
@@ -44,6 +74,7 @@ def presse(cfg: dict, mots: list[str], recuperer_texte: bool = True) -> Iterable
     stats = {"lus": 0, "hors_sujet": 0, "google_non_resolu": 0, "sans_texte": 0, "retenus": 0}
     for r in _requetes(cfg):
         est_google = "news.google.com" in r["url_rss"]
+        est_agregateur = est_google or "bing.com/news" in r["url_rss"]   # requêtes déjà ciblées : pas de filtre de titre
         try:
             docs = rss._lire_flux(r["url_rss"], r["acteur_id"], None, "presse", "secondaire", depuis)
         except Exception as ex:  # noqa: BLE001
@@ -55,13 +86,14 @@ def presse(cfg: dict, mots: list[str], recuperer_texte: bool = True) -> Iterable
                 continue
             vus.add(d["hash"]); stats["lus"] += 1
             # flux généraliste d'un éditeur : on ne garde que les entrées dont le titre/résumé parle du budget
-            if not est_google and mots_titre and not _pertinent_titre(d.get("titre", ""), d.get("texte", ""), mots_titre):
+            if not est_agregateur and mots_titre and not _pertinent_titre(d.get("titre", ""), d.get("texte", ""), mots_titre):
                 stats["hors_sujet"] += 1; continue
-            url_finale = rss.resoudre_url(d["url"]) if est_google else d["url"]
+            url_finale = _resoudre(d["url"])
             if "news.google.com" in url_finale:
                 # lien Google non décodé : la page Google ne contient pas l'article ; on n'envoie rien au LLM
                 stats["google_non_resolu"] += 1
-                log.info("lien Google Actualités non résolu, ignoré : %s", d.get("titre", "")[:80]); continue
+                _diagnostic_decodeur(d["url"], d.get("titre", ""))
+                continue
             texte = d["texte"] or ""
             if recuperer_texte:
                 txt, uf = rss._texte_article(url_finale)
