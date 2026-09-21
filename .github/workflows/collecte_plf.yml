@@ -29,9 +29,14 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Collecte et extraction PLF
         env:
-          # Mêmes secrets que collecte.yml (clé LLM, Supabase si utilisé par extraction/llm.py)
+          # Mêmes variables que collecte.yml, lues par extraction/llm.py (fournisseur interchangeable)
+          LLM_FOURNISSEUR: ${{ vars.LLM_FOURNISSEUR || 'gemini' }}
+          LLM_MODELE: ${{ vars.LLM_MODELE || '' }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: ${{ vars.OPENAI_BASE_URL || '' }}
         run: |
           python -m jobs.run_collecte_plf ${{ inputs.dry_run == true && '--dry-run' || '' }} --textes "${{ inputs.textes || 'plf,plfss' }}"
       - name: Commit des exports
