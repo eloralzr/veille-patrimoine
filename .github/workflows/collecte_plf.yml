@@ -26,7 +26,11 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-      - run: pip install -r requirements.txt
+      - name: Dépendances
+        run: |
+          pip install -r requirements.txt
+          # bibliothèques de collecte/rss.py et de collecte/plf.py, au cas où requirements.txt ne les liste pas
+          pip install feedparser trafilatura googlenewsdecoder requests pyyaml pdfplumber
       - name: Collecte et extraction PLF
         env:
           # Mêmes variables que collecte.yml, lues par extraction/llm.py (fournisseur interchangeable)
