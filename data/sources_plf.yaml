@@ -1,0 +1,88 @@
+# Sources de collecte — veille PLF / PLFSS 2027
+# Chaque URL marquée "a_verifier: true" doit être confirmée à la main avant la première exécution :
+# les adresses des jeux de données ouvertes changent avec la législature et la session.
+version: '2026-09-21'
+
+# Identifiants du dossier législatif (à renseigner dès le dépôt du texte, début octobre 2026)
+dossiers:
+  plf:
+    libelle: Projet de loi de finances pour 2027
+    an_dossier_ref: ''            # ex. DLR5L17N5xxxx — identifiant du dossier dans les données ouvertes de l'AN
+    an_texte_refs: []             # ex. [PRJLANR5L17B1xxx] — identifiants des textes examinés (dépôt, commission, séance…)
+    senat_dosleg: ''              # ex. pjl26-xxx — identifiant du dossier au Sénat
+    page_an: ''                   # URL de la page du dossier sur assemblee-nationale.fr
+    page_senat: ''                # URL de la page du dossier sur senat.fr
+    page_gouv: https://www.budget.gouv.fr/   # page du PLF 2027 sur budget.gouv.fr (à préciser)
+  plfss:
+    libelle: Projet de loi de financement de la sécurité sociale pour 2027
+    an_dossier_ref: ''
+    an_texte_refs: []
+    senat_dosleg: ''
+    page_an: ''
+    page_senat: ''
+    page_gouv: https://www.securite-sociale.fr/
+
+# Données ouvertes de l'Assemblée nationale (JSON zippé, mis à jour quotidiennement)
+assemblee_nationale:
+  amendements_zip: https://data.assemblee-nationale.fr/static/openData/repository/17/loi/amendements_div_legis/Amendements.json.zip
+  dossiers_zip: https://data.assemblee-nationale.fr/static/openData/repository/17/loi/dossiers_legislatifs/Dossiers_Legislatifs.json.zip
+  a_verifier: true
+  # Correspondance groupe politique (données ouvertes) -> acteur_id ; voir aussi la colonne code_an de acteurs_plf.csv
+  groupes:
+    PO845401: an-rn
+    PO845407: an-epr
+    PO845413: an-lfi
+    PO845419: an-soc
+    PO845425: an-dr
+    PO845439: an-ecos
+    PO845454: an-dem
+    PO845470: an-hor
+    PO845485: an-liot
+    PO845514: an-gdr
+    PO872880: an-udr
+    PO840056: an-ni
+  # Amendements du Gouvernement et des commissions : détectés sur le champ auteur (typeAuteur)
+  auteur_gouvernement: gouvernement-plf
+  auteur_commission_finances: an-commission-finances
+  auteur_commission_affaires_sociales: an-commission-affaires-sociales
+
+# Données ouvertes du Sénat : base Ameli (amendements) et Dosleg (dossiers), fournies en dump PostgreSQL
+senat:
+  ameli_dump: https://data.senat.fr/data/ameli/ameli.zip
+  dosleg_dump: https://data.senat.fr/data/dosleg/dosleg.zip
+  a_verifier: true
+  # Phase 1 du chantier : les amendements du Sénat sont collectés depuis les pages HTML de liste
+  # (senat.fr/amendements/<session>/<num>/...) ; le dump Ameli est la cible de la phase 2.
+  groupes:
+    Les Républicains: senat-lr
+    SER: senat-ser
+    UC: senat-uc
+    Les Indépendants: senat-lirt
+    RDPI: senat-rdpi
+    CRCE-K: senat-crce
+    RDSE: senat-rdse
+    GEST: senat-gest
+    RASNAG: senat-rasnag
+
+# Flux RSS et requêtes presse : réutilisent collecte/rss.py avec ces mots-clés supplémentaires
+presse:
+  mots_cles:
+    - PLF 2027
+    - projet de loi de finances 2027
+    - PLFSS 2027
+    - budget 2027
+    - amendement
+    - commission des finances
+    - rapporteur général
+    - niche fiscale
+    - prélèvements sociaux
+  flux:
+    - https://www.budget.gouv.fr/rss            # à vérifier
+    - https://www.senat.fr/flux-rss.html        # page d'index des flux du Sénat : choisir "Commission des finances"
+    - https://www2.assemblee-nationale.fr/dyn/les-fils-rss-de-l-assemblee-nationale   # page d'index des flux de l'AN
+
+# Filtrage thématique avant appel LLM : un amendement n'est envoyé à l'extraction que si son dispositif
+# ou son exposé sommaire contient au moins un mot-clé de la taxonomie (data/taxonomie.yaml)
+filtre:
+  mots_cles_minimum: 1
+  longueur_minimum_texte: 120

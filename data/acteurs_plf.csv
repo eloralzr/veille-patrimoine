@@ -1,0 +1,32 @@
+acteur_id,nom,sigle,type,chambre,effectif,priorite,site_officiel,source_composition,code_an,notes,actif,maj_par,maj_le
+gouvernement-plf,Gouvernement,GVT,gouvernement,gouvernement,,P1,https://www.budget.gouv.fr/,,,"Texte initial, amendements du Gouvernement, lettres rectificatives",True,Claude (sources officielles),2026-09-21
+an-commission-finances,Assemblée nationale — commission des Finances,CF-AN,commission,an,,P1,https://www.assemblee-nationale.fr/dyn/17/organes/commissions-permanentes/finances,,,"Rapporteur général, rapports, amendements de commission",True,Claude (sources officielles),2026-09-21
+an-commission-affaires-sociales,Assemblée nationale — commission des Affaires sociales,CAS-AN,commission,an,,P2,,,,PLFSS,True,Claude (sources officielles),2026-09-21
+senat-commission-finances,Sénat — commission des Finances,CF-SEN,commission,senat,,P1,https://www.senat.fr/travaux-parlementaires/commissions/commission-des-finances.html,,,,True,Claude (sources officielles),2026-09-21
+senat-commission-affaires-sociales,Sénat — commission des Affaires sociales,CAS-SEN,commission,senat,,P2,,,,PLFSS,True,Claude (sources officielles),2026-09-21
+cmp,Commission mixte paritaire,CMP,commission,cmp,,P1,,,,,True,Claude (sources officielles),2026-09-21
+conseil-constitutionnel,Conseil constitutionnel,CC,institution,na,,P1,https://www.conseil-constitutionnel.fr/,,,Décisions sur les lois de finances,True,Claude (sources officielles),2026-09-21
+conseil-etat,Conseil d'État,CE,institution,na,,P2,,,,Avis sur les projets de loi,True,Claude (sources officielles),2026-09-21
+hcfp,Haut Conseil des finances publiques,HCFP,institution,na,,P2,https://www.hcfp.fr/,,,Avis sur les prévisions macroéconomiques,True,Claude (sources officielles),2026-09-21
+cour-des-comptes,Cour des comptes,CDC,institution,na,,P2,https://www.ccomptes.fr/,,,,True,Claude (sources officielles),2026-09-21
+an-rn,Rassemblement National,RN,groupe,an,122,P2,,https://www2.assemblee-nationale.fr/instances/liste/groupes_politiques/effectif,PO845401,,True,Claude (sources officielles),2026-09-21
+an-epr,Ensemble pour la République,EPR,groupe,an,90,P2,,https://www2.assemblee-nationale.fr/instances/liste/groupes_politiques/effectif,PO845407,,True,Claude (sources officielles),2026-09-21
+an-lfi,La France insoumise - Nouveau Front Populaire,LFI-NFP,groupe,an,71,P2,,https://www2.assemblee-nationale.fr/instances/liste/groupes_politiques/effectif,PO845413,,True,Claude (sources officielles),2026-09-21
+an-soc,Socialistes et apparentés,SOC,groupe,an,67,P2,,https://www2.assemblee-nationale.fr/instances/liste/groupes_politiques/effectif,PO845419,,True,Claude (sources officielles),2026-09-21
+an-dr,Droite Républicaine,DR,groupe,an,48,P2,,https://www2.assemblee-nationale.fr/instances/liste/groupes_politiques/effectif,PO845425,,True,Claude (sources officielles),2026-09-21
+an-ecos,Écologiste et Social,EcoS,groupe,an,38,P2,,https://www2.assemblee-nationale.fr/instances/liste/groupes_politiques/effectif,PO845439,,True,Claude (sources officielles),2026-09-21
+an-dem,Les Démocrates,Dem,groupe,an,37,P2,,https://www2.assemblee-nationale.fr/instances/liste/groupes_politiques/effectif,PO845454,,True,Claude (sources officielles),2026-09-21
+an-hor,Horizons & Indépendants,HOR,groupe,an,36,P2,,https://www2.assemblee-nationale.fr/instances/liste/groupes_politiques/effectif,PO845470,,True,Claude (sources officielles),2026-09-21
+an-liot,"Libertés, Indépendants, Outre-mer et Territoires",LIOT,groupe,an,22,P2,,https://www2.assemblee-nationale.fr/instances/liste/groupes_politiques/effectif,PO845485,,True,Claude (sources officielles),2026-09-21
+an-gdr,Gauche Démocrate et Républicaine,GDR,groupe,an,17,P2,,https://www2.assemblee-nationale.fr/instances/liste/groupes_politiques/effectif,PO845514,,True,Claude (sources officielles),2026-09-21
+an-udr,Union des droites pour la République,UDR,groupe,an,17,P2,,https://www2.assemblee-nationale.fr/instances/liste/groupes_politiques/effectif,PO872880,,True,Claude (sources officielles),2026-09-21
+an-ni,Députés non inscrits,NI,groupe,an,12,P3,,https://www2.assemblee-nationale.fr/instances/liste/groupes_politiques/effectif,PO840056,,True,Claude (sources officielles),2026-09-21
+senat-lr,Les Républicains,LR,groupe,senat,131,P2,,https://www.senat.fr/senateurs/grp.html,,,True,Claude (sources officielles),2026-09-21
+senat-ser,"Socialiste, Écologiste et Républicain",SER,groupe,senat,64,P2,,https://www.senat.fr/senateurs/grp.html,,,True,Claude (sources officielles),2026-09-21
+senat-uc,Union Centriste,UC,groupe,senat,59,P2,,https://www.senat.fr/senateurs/grp.html,,,True,Claude (sources officielles),2026-09-21
+senat-lirt,Les Indépendants - République et Territoires,LIRT,groupe,senat,20,P2,,https://www.senat.fr/senateurs/grp.html,,,True,Claude (sources officielles),2026-09-21
+senat-rdpi,"Rassemblement des démocrates, progressistes et indépendants",RDPI,groupe,senat,19,P2,,https://www.senat.fr/senateurs/grp.html,,,True,Claude (sources officielles),2026-09-21
+senat-crce,Communiste Républicain Citoyen et Écologiste - Kanaky,CRCE-K,groupe,senat,18,P2,,https://www.senat.fr/senateurs/grp.html,,,True,Claude (sources officielles),2026-09-21
+senat-rdse,Rassemblement Démocratique et Social Européen,RDSE,groupe,senat,17,P2,,https://www.senat.fr/senateurs/grp.html,,,True,Claude (sources officielles),2026-09-21
+senat-gest,Écologiste - Solidarité et Territoires,GEST,groupe,senat,16,P2,,https://www.senat.fr/senateurs/grp.html,,,True,Claude (sources officielles),2026-09-21
+senat-rasnag,Sénateurs ne figurant sur la liste d'aucun groupe,RASNAG,groupe,senat,4,P3,,https://www.senat.fr/senateurs/grp.html,,,True,Claude (sources officielles),2026-09-21

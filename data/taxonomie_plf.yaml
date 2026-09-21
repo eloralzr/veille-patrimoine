@@ -1,0 +1,72 @@
+version: '2026-09-21'
+note: 'Effectifs AN (XVIIe législature) et Sénat relevés sur les pages officielles
+  le 2026-09-21 ; la page Sénat date du 2026-09-20. Renouvellement sénatorial de septembre
+  2026 : mettre à jour les groupes du Sénat après la constitution des nouveaux groupes
+  (début octobre 2026).'
+themes: 'communs aux deux espaces : voir taxonomie.yaml'
+textes:
+- id: plf
+  libelle: PLF 2027 — projet de loi de finances
+- id: plfss
+  libelle: PLFSS 2027 — projet de loi de financement de la sécurité sociale
+chambres:
+- id: gouvernement
+  libelle: Gouvernement
+- id: an
+  libelle: Assemblée nationale
+- id: senat
+  libelle: Sénat
+- id: cmp
+  libelle: Commission mixte paritaire
+- id: na
+  libelle: Hors Parlement
+stades:
+- id: texte_initial
+  libelle: Texte initial
+- id: depose
+  libelle: Amendement déposé
+- id: commission
+  libelle: Examen en commission
+- id: seance
+  libelle: Examen en séance
+- id: cmp
+  libelle: Commission mixte paritaire
+- id: lecture_definitive
+  libelle: Lecture définitive
+- id: promulgue
+  libelle: Promulgué
+- id: censure_cc
+  libelle: Censuré par le Conseil constitutionnel
+sorts:
+- id: en_attente
+  libelle: En attente
+- id: adopte
+  libelle: Adopté
+- id: rejete
+  libelle: Rejeté
+- id: retire
+  libelle: Retiré
+- id: tombe
+  libelle: Tombé
+- id: non_soutenu
+  libelle: Non soutenu
+- id: sans_objet
+  libelle: Sans objet
+natures_position:
+- id: disposition_initiale
+  libelle: Disposition du texte initial
+  definition: Article ou mesure du projet de loi tel que déposé par le Gouvernement
+- id: amendement
+  libelle: Amendement
+  definition: Amendement déposé par un groupe, un rapporteur, une commission ou le
+    Gouvernement
+- id: avis
+  libelle: Avis institutionnel
+  definition: Avis ou décision d'une institution (Conseil d'État, HCFP, Conseil constitutionnel,
+    Cour des comptes)
+- id: chiffrage
+  libelle: Chiffrage / évaluation
+  definition: Estimation du coût ou du rendement d'une disposition ou d'un amendement
+- id: reaction
+  libelle: Réaction
+  definition: Prise de position d'un acteur sur une disposition ou un amendement
