@@ -8,8 +8,8 @@
 Le matin, la permanence colle l'export dans le Projet Claude « Import veille » (mode « Import PLF », instructions v17c),
 ou dans l'onglet Source manuelle > Importer des fiches JSON de l'espace PLF de l'artefact.
 
-Point d'intégration LLM : `appeler_llm(prompt)` ci-dessous appelle `extraction.llm`. Adapter les deux lignes
-marquées TODO au nom réel de la fonction du dépôt (celle qu'utilise jobs/run_collecte.py).
+Appel LLM : `appeler_llm` s'appuie sur `extraction.llm.appeler(systeme, utilisateur)` du dépôt (fournisseur, modèle
+et clés lus dans l'environnement : LLM_FOURNISSEUR, LLM_MODELE, *_API_KEY, OPENAI_BASE_URL).
 """
 from __future__ import annotations
 
@@ -31,12 +31,16 @@ ETAT = RACINE / "exports" / ".plf_sources_vues.json"   # source_id déjà trait�
 log = logging.getLogger("jobs.plf")
 
 
+SYSTEME = ("Tu es un extracteur de fiches structurées pour un outil interne de veille. "
+           "Tu réponds uniquement par une liste JSON valide (ou un objet {\"fiches\": [...]}), sans texte ni balises autour.")
+
+
 def appeler_llm(prompt: str) -> tuple[str, str]:
-    """Renvoie (texte_reponse, nom_modele). TODO : brancher sur extraction.llm du dépôt."""
-    from extraction import llm  # noqa: WPS433 — import différé pour que --dry-run fonctionne sans clé API
-    reponse = llm.completer(prompt)                      # TODO : nom réel (ex. llm.extraire, llm.chat…)
-    modele = getattr(llm, "MODELE", None) or getattr(llm, "MODEL", "llm")   # TODO : constante réelle
-    return reponse, str(modele)
+    """Renvoie (texte_reponse, nom_modele) via extraction/llm.py du dépôt (fournisseur interchangeable, relances, replis)."""
+    from extraction import llm  # import différé pour que --dry-run fonctionne sans clé API
+    reponse = llm.appeler(SYSTEME, prompt)
+    _, modele = llm.fournisseur_courant()   # lu après l'appel : tient compte d'un éventuel repli de modèle
+    return reponse, modele
 
 
 def parser_json(texte: str) -> list[dict]:
