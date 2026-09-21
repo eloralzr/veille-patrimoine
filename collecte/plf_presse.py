@@ -30,10 +30,24 @@ def _requetes(cfg: dict) -> list[dict]:
         return [r for r in csv.DictReader(f) if str(r.get("actif", "true")).lower() == "true" and r.get("url_rss")]
 
 
+def _decoder_google(url: str) -> str:
+    """Décode un lien Google Actualités. Accepte les deux formats de réponse de googlenewsdecoder :
+    {'status': True, 'decoded_url': ...} (anciennes versions) et {'success': True, 'decoded_url': ...} (0.2.x)."""
+    try:
+        from googlenewsdecoder import gnewsdecoder
+        res = gnewsdecoder(url, interval=1)
+        if isinstance(res, dict) and (res.get("status") or res.get("success")) and res.get("decoded_url"):
+            return res["decoded_url"]
+        log.debug("décodage Google sans URL : %s", str(res)[:200])
+    except Exception as ex:  # noqa: BLE001
+        log.debug("décodage Google échoué %s : %s", url[:80], ex)
+    return url
+
+
 def _resoudre(url: str) -> str:
     """Adresse réelle de l'article : décodeur pour Google Actualités, paramètre `url` pour Bing Actualités, sinon inchangée."""
     if "news.google.com" in url:
-        return rss.resoudre_url(url)
+        return _decoder_google(url)
     if "bing.com/news/apiclick" in url:
         from urllib.parse import parse_qs, unquote, urlparse
         cible = parse_qs(urlparse(url).query).get("url", [""])[0]
