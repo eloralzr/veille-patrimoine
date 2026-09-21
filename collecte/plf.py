@@ -10,8 +10,9 @@ Produit une liste de « documents » homogènes, prêts pour l'extraction LLM :
       "contexte":   {"texte": plf|plfss, "chambre": ..., "stade": ..., "article": ..., "num_amendement": ..., "auteur": ..., "sort": ...}
     }
 
-Trois collecteurs :
-  - amendements_an()   : données ouvertes de l'Assemblée nationale (JSON zippé) — le cœur du dispositif ;
+Quatre collecteurs :
+  - presse (collecte/plf_presse.py) : flux Google Actualités PLF/PLFSS via collecte/rss.py — actif dès aujourd'hui ;
+  - amendements_an()   : données ouvertes de l'Assemblée nationale (JSON zippé) — le cœur du dispositif après le dépôt ;
   - texte_initial()    : articles du projet de loi et exposé des motifs, depuis un PDF ou une page HTML configurés ;
   - amendements_senat(): pages HTML de liste des amendements du Sénat (phase 1 ; le dump Ameli est la phase 2).
 
@@ -289,6 +290,13 @@ def collecter(cfg: dict | None = None, textes: tuple[str, ...] = ("plf", "plfss"
             docs.extend(texte_initial(cfg, mots, t, url=page, chemin_local=RACINE / local if local else None))
         except Exception as e:  # noqa: BLE001
             log.error("texte_initial (%s) : %s", t, e)
+    # presse (flux Google Actualités) : réutilise collecte/rss.py ; disponible dès aujourd'hui, avant le dépôt du texte
+    if cfg.get("presse", {}).get("requetes_csv"):
+        try:
+            from collecte.plf_presse import presse
+            docs.extend(presse(cfg, mots))
+        except Exception as e:  # noqa: BLE001
+            log.error("presse PLF : %s", e)
     vus, uniques = set(), []
     for d in docs:
         if d["source_id"] in vus:
