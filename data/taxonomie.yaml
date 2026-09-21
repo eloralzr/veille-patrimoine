@@ -1,14 +1,8 @@
-# Taxonomie de veille — programmes économiques et fiscaux
-# Propriétaire : Elora Lazaar
-# Version : 2026-09-14 (v1, validée)
-# Usage : classification des mesures par Claude (extraction/prompts.py) et filtres de l'interface.
-# Règle : un mot-clé sert à la recherche ET à la classification ; ajouter ici avant d'ajouter dans requetes_presse.csv.
-
-version: '2026-09-17'
+version: '2026-09-19'
 proprietaire: Elora Lazaar
 themes:
 - id: fiscalite
-  libelle: Fiscalité du patrimoine
+  libelle: Fiscalité du patrimoine et ingénierie patrimoniale
   sous_themes:
   - id: ifi_fortune
     libelle: IFI / imposition de la fortune
@@ -112,6 +106,16 @@ themes:
     - loi de programmation fiscale
     - niches fiscales
     impact_client: Prévisibilité du cadre fiscal sur le quinquennat ; engagements transversaux sans mesure ciblée
+  - id: regime_matrimonial
+    libelle: Régime matrimonial et famille
+    mots_cles:
+    - régime matrimonial
+    - communauté universelle
+    - PACS
+    - famille recomposée
+    - conjoint survivant
+    - indivision
+    impact_client: Protection et transmission au sein du couple
 - id: transmission
   libelle: Transmission et succession
   sous_themes:
@@ -173,16 +177,6 @@ themes:
     - abus de droit
     - optimisation fiscale
     impact_client: Choix du véhicule de détention
-  - id: regime_matrimonial
-    libelle: Régime matrimonial et famille
-    mots_cles:
-    - régime matrimonial
-    - communauté universelle
-    - PACS
-    - famille recomposée
-    - conjoint survivant
-    - indivision
-    impact_client: Protection et transmission au sein du couple
 - id: protection
   libelle: Protection et prévoyance
   sous_themes:
