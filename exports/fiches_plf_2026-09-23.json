@@ -1,0 +1,39 @@
+[
+  {
+    "id": "2661c619-6fac-430b-8735-f1a3fa4530ca",
+    "acteur_id": "gouvernement-plf",
+    "theme_id": "fiscalite",
+    "sous_theme_id": "immobilier",
+    "mots_cles": [
+      "taxe foncière",
+      "retraités",
+      "exonération",
+      "réduction",
+      "revenu fiscal de référence"
+    ],
+    "titre": "Revalorisation des seuils d'exonération de taxe foncière pour les retraités",
+    "resume": "Les plafonds de revenus permettant aux retraités de bénéficier d'une exonération ou réduction de taxe foncière seront revalorisés d'environ 2 % en 2027. Pour prétendre à cet avantage, le revenu fiscal de référence de 2026 devra être inférieur à 13 049 euros pour une personne seule et à 20 018 euros pour un couple. La mesure prévoit une réduction de 100 euros pour les retraités de 65 à 75 ans, et une exonération totale au-delà de 75 ans ou pour les bénéficiaires de l'ASPA et de l'ASI.",
+    "citation": "Les conditions d'accès à ces avantages fiscaux vont être élargies en 2027, offrant la possibilité à davantage de retraités d'en profiter.",
+    "nature": "disposition_initiale",
+    "impact_client": "Les retraités sous certains plafonds de revenus pourront bénéficier d'une réduction de 100 euros ou d'une exonération totale de leur taxe foncière.",
+    "url_source": "https://www.journaldunet.com/management/id/1555105-hf1-taxe-fonciere-retraites-condition/",
+    "date_source": "2026-09-23",
+    "confiance": "moyen",
+    "texte": "plf",
+    "stade": "annonce",
+    "chambre": "gouvernement",
+    "sort": "en_attente",
+    "article": null,
+    "num_amendement": null,
+    "auteur": null,
+    "entree_en_vigueur": "2027",
+    "montant_chiffrage": null,
+    "mesure_parent_id": null,
+    "programme_lie_id": null,
+    "statut": "brut",
+    "saisi_par": "auto:gemini-3.6-flash",
+    "valide_par": null,
+    "cree_le": "2026-09-23T09:29:08Z",
+    "maj_le": "2026-09-23T09:29:08Z"
+  }
+]
