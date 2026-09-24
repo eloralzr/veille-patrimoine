@@ -100,15 +100,21 @@ def _openai_compatible(systeme: str, utilisateur: str, modele: str, base_url: st
 
 
 def _anthropic(systeme: str, utilisateur: str, modele: str) -> str:
-    body = {"model": modele, "max_tokens": 8192, "temperature": 0.1, "system": systeme,
+    cle = _cle("ANTHROPIC_API_KEY")
+    base = os.environ.get("ANTHROPIC_BASE_URL", "https://api.anthropic.com").rstrip("/")
+    body = {"model": modele, "max_tokens": 8192, "system": systeme,
             "messages": [{"role": "user", "content": utilisateur}]}
-    r = requests.post("https://api.anthropic.com/v1/messages",
-                      headers={"x-api-key": _cle("ANTHROPIC_API_KEY"), "anthropic-version": "2023-06-01"},
-                      json=body, timeout=TIMEOUT)
+    if modele.startswith(("claude-sonnet-5", "claude-opus-5", "claude-fable")):
+        body["output_config"] = {"effort": "low"}   # génération 5 : temperature refusée (HTTP 400)
+    else:
+        body["temperature"] = 0.1
+    r = requests.post(base + "/v1/messages",
+                      headers={"x-api-key": cle, "api-key": cle, "anthropic-version": "2023-06-01"},
+                      json=body, timeout=240)
     if r.status_code != 200:
         raise ErreurLLM(f"Anthropic HTTP {r.status_code} : {r.text[:300]}")
     try:
-        return "".join(b.get("text", "") for b in r.json()["content"])
+        return "".join(b.get("text", "") for b in r.json()["content"] if b.get("type") == "text")
     except Exception:
         raise ErreurLLM(f"Anthropic réponse inattendue : {r.text[:300]}")
 
@@ -141,7 +147,7 @@ def appeler(systeme: str, utilisateur: str) -> str:
                     log.warning("modèle indisponible, repli sur %s", m)
                     continue
                 raise
-            transitoire = any(code in msg for code in ("HTTP 429", "HTTP 500", "HTTP 502", "HTTP 503", "HTTP 504"))
+            transitoire = any(code in msg for code in ("HTTP 429", "HTTP 500", "HTTP 502", "HTTP 503", "HTTP 504")) and "quota" not in msg.lower()
             if not transitoire or tentative == MAX_TENTATIVES:
                 raise
             attente = 10 * tentative
