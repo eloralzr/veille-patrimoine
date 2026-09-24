@@ -77,8 +77,9 @@ def resoudre_url(url: str) -> str:
         res = gnewsdecoder(url, interval=1)
         if isinstance(res, dict) and res.get("status") and res.get("decoded_url"):
             return res["decoded_url"]
+        log.warning("décodage Google News refusé %s : %s", url[:80], str((res or {}).get("message", ""))[:200])
     except Exception as ex:
-        log.debug("décodage Google News échoué %s : %s", url[:80], ex)
+        log.warning("décodage Google News échoué %s : %s", url[:80], ex)
     return url
 
 
@@ -89,6 +90,8 @@ UA_NAVIGATEUR = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 def _texte_article(url: str) -> tuple[str, str | None]:
     """Retourne (texte, url_finale). Texte vide si échec. Résout d'abord les liens Google Actualités."""
     cible = resoudre_url(url)
+    if "news.google.com" in cible:      # décodage échoué : inutile de télécharger la page Google
+        return "", None
     try:
         r = requests.get(cible, headers={"User-Agent": UA_NAVIGATEUR, "Accept-Language": "fr-FR,fr;q=0.9"},
                          timeout=TIMEOUT, allow_redirects=True)
@@ -106,7 +109,7 @@ def _texte_article(url: str) -> tuple[str, str | None]:
             txt = " ".join(_nettoyer_html(p) for p in paras if len(_nettoyer_html(p)) > 60)
         return txt.strip(), r.url
     except Exception as ex:
-        log.debug("fetch échoué %s : %s", cible[:80], ex)
+        log.warning("fetch échoué %s : %s", cible[:80], ex)
         return "", cible if cible != url else None
 
 
