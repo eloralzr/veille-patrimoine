@@ -9,7 +9,7 @@ lesechos-economie,gouvernement-plf,plf,Les Échos · Économie (flux direct — 
 lefigaro-economie,gouvernement-plf,plf,Le Figaro · Économie (flux direct),https://www.lefigaro.fr/rss/figaro_economie.xml,true
 lemonde-economie,gouvernement-plf,plf,Le Monde · Économie (flux direct),https://www.lemonde.fr/economie/rss_full.xml,true
 lemonde-politique,gouvernement-plf,plf,Le Monde · Politique (flux direct),https://www.lemonde.fr/politique/rss_full.xml,true
-publicsenat,senat-commission-finances,plf,Public Sénat (flux direct — URL à vérifier),https://www.publicsenat.fr/rss.xml,false
+publicsenat,gouvernement-plf,plf,Public Sénat (flux direct — vérifié le 24/09),https://www.publicsenat.fr/feed/,true
 lcp,gouvernement-plf,plf,LCP (flux direct — vérifié le 24/09),https://lcp.fr/rss.xml,true
 vie-publique,gouvernement-plf,plf,vie-publique.fr (flux direct — URL à vérifier),https://www.vie-publique.fr/rss/actualites,false
 bing-plf-2027,gouvernement-plf,plf,"Bing Actualités · PLF 2027 / budget 2027 — désactivé (flux illisible le 21/09, redondant avec Google)",https://www.bing.com/news/search?q=%22PLF%202027%22%20OR%20%22projet%20de%20loi%20de%20finances%22%202027%20OR%20%22budget%202027%22&format=rss&setlang=fr&cc=FR,false
@@ -18,3 +18,6 @@ bing-plfss-2027,gouvernement-plf,plfss,"Bing Actualités · PLFSS 2027 — désa
 bing-budget-retraites,gouvernement-plf,plfss,"Bing Actualités · budget 2027 × retraites, CSG — désactivé (flux illisible le 21/09, redondant avec Google)",https://www.bing.com/news/search?q=%22budget%202027%22%20retraites%20OR%20pensions%20OR%20CSG%20OR%20%22pr%C3%A9l%C3%A8vements%20sociaux%22&format=rss&setlang=fr&cc=FR,false
 legifiscal,gouvernement-plf,plf,LégiFiscal (flux direct — vérifié le 24/09),https://www.legifiscal.fr/rss.xml,true
 capital,gouvernement-plf,plf,Capital (flux direct — vérifié le 24/09),https://feed.prismamediadigital.com/v1/cap/rss?limit=20,true
+franceinfo-politique,gouvernement-plf,plf,franceinfo · Politique (flux direct — vérifié le 24/09),https://www.franceinfo.fr/politique.rss,true
+franceinfo-economie,gouvernement-plf,plf,franceinfo · Économie (flux direct — vérifié le 24/09),https://www.franceinfo.fr/economie.rss,true
+france24,gouvernement-plf,plf,France 24 (flux direct — vérifié le 24/09),https://www.france24.com/fr/rss,true
