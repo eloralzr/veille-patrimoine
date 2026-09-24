@@ -2,5 +2,7 @@ supabase>=2.7
 feedparser>=6.0
 requests>=2.32
 trafilatura>=1.12
+lxml_html_clean
 googlenewsdecoder>=0.1.7
 pyyaml>=6.0
+pdfplumber
