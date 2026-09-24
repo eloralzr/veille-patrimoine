@@ -39,3 +39,7 @@ presse-lemonde-politique,*,tous,Le Monde · Politique (flux direct),https://www.
 presse-lcp,*,tous,LCP (flux direct),https://lcp.fr/rss.xml,quotidien,true
 presse-legifiscal,*,tous,LégiFiscal (flux direct),https://www.legifiscal.fr/rss.xml,quotidien,true
 presse-capital,*,tous,Capital (flux direct),https://feed.prismamediadigital.com/v1/cap/rss?limit=20,quotidien,true
+presse-publicsenat,*,tous,Public Sénat (flux direct),https://www.publicsenat.fr/feed/,quotidien,true
+presse-franceinfo-politique,*,tous,franceinfo · Politique (flux direct),https://www.franceinfo.fr/politique.rss,quotidien,true
+presse-franceinfo-economie,*,tous,franceinfo · Économie (flux direct),https://www.franceinfo.fr/economie.rss,quotidien,true
+presse-france24,*,tous,France 24 (flux direct),https://www.france24.com/fr/rss,quotidien,true
