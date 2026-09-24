@@ -5,6 +5,7 @@ Variables d'environnement :
   LLM_MODELE      = nom du modèle (défaut selon fournisseur)
   GEMINI_API_KEY / MISTRAL_API_KEY / ANTHROPIC_API_KEY / OPENAI_API_KEY
   OPENAI_BASE_URL = URL d'une API compatible OpenAI (ex. passerelle interne type LazardGPT)
+  ANTHROPIC_BASE_URL = URL d'une passerelle compatible Anthropic (ex. https://chatgpt-lam.lazard.com)
 """
 from __future__ import annotations
 
@@ -20,7 +21,7 @@ log = logging.getLogger("extraction.llm")
 MODELES_DEFAUT = {
     "gemini": "gemini-3.6-flash",
     "mistral": "mistral-small-latest",
-    "anthropic": "claude-sonnet-4-5",
+    "anthropic": "claude-sonnet-5",
     "openai": "gpt-4o-mini",
 }
 TIMEOUT = 90
@@ -29,7 +30,7 @@ MAX_TENTATIVES = 3
 REPLI = {
     "gemini": ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3-flash", "gemini-2.5-flash"],
     "mistral": ["mistral-small-latest", "mistral-medium-latest"],
-    "anthropic": ["claude-sonnet-4-5", "claude-3-5-haiku-latest"],
+    "anthropic": ["claude-sonnet-5", "claude-sonnet-4-6"],
     "openai": [],
 }
 _modele_actif: dict[str, str] = {}
