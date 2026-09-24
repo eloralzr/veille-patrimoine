@@ -5,6 +5,8 @@ Usage :
   python jobs/run_collecte.py --sans-collecte # extraction seule
   python jobs/run_collecte.py --sans-extraction
   python jobs/run_collecte.py --max 20        # limite de documents extraits (défaut : MAX_DOCS ou 40)
+
+Robustesse (2026-09-24) : chaque écriture Supabase est retentée 3 fois ; l'export du jour est écrit même en cas d'arrêt.
 """
 from __future__ import annotations
 
@@ -13,6 +15,7 @@ import json
 import logging
 import os
 import sys
+import time
 import traceback
 from datetime import datetime, timezone
 from pathlib import Path
@@ -32,11 +35,23 @@ EXPORT: list[dict] = []          # fiches créées pendant cette exécution, exp
 EXPORT_DIR = ROOT / "exports"
 CHAMPS_EXPORT = ["id", "acteur_id", "theme_id", "sous_theme_id", "mots_cles", "titre", "resume", "citation",
                  "nature", "impact_client", "url_source", "date_source", "confiance", "saisi_par", "cree_le"]
+TENTATIVES_SUPA = 3
+
+
+def _supa(action: str, fonction, *args, **kwargs):
+    """Appel Supabase avec 3 tentatives (coupures réseau ponctuelles). Renvoie None si toutes échouent."""
+    for i in range(1, TENTATIVES_SUPA + 1):
+        try:
+            return fonction(*args, **kwargs)
+        except Exception as ex:  # noqa: BLE001
+            log.warning("Supabase %s : tentative %d/%d échouée (%s)", action, i, TENTATIVES_SUPA, str(ex)[:120])
+            time.sleep(5 * i)
+    log.error("Supabase %s : abandon après %d tentatives", action, TENTATIVES_SUPA)
+    return None
 
 
 def ecrire_exports() -> str | None:
     """Écrit exports/fiches_AAAA-MM-JJ.json (fiches de la nuit) et exports/derniers_7_jours.json. Retourne le chemin du jour."""
-    import json
     from datetime import date, timedelta
     EXPORT_DIR.mkdir(exist_ok=True)
     aujourd_hui = date.today().isoformat()
@@ -79,11 +94,12 @@ def extraire(max_docs: int, acteurs: set[str], tax: dict, idx: dict, fournisseur
             txt, url_finale = rss._texte_article(d.get("url_finale") or d["url"])
             if len(txt) >= TEXTE_MIN:
                 texte = txt[:rss.TEXTE_MAX]
-                supa.maj_document(d["id"], texte=texte, url_finale=url_finale)
+                _supa("maj document", supa.maj_document, d["id"], texte=texte, url_finale=url_finale)
                 d["url_finale"] = url_finale
             else:
-                supa.maj_document(d["id"], statut="ignore", erreur="texte trop court (article non récupérable)", traite_le=maintenant,
-                                  url_finale=url_finale or d.get("url_finale"))
+                _supa("maj document", supa.maj_document, d["id"], statut="ignore",
+                      erreur="texte trop court (article non récupérable)", traite_le=maintenant,
+                      url_finale=url_finale or d.get("url_finale"))
                 stats["docs_ignores"] += 1
                 continue
         try:
@@ -98,7 +114,8 @@ def extraire(max_docs: int, acteurs: set[str], tax: dict, idx: dict, fournisseur
                     d["acteur_id"], d.get("url_finale") or d["url"], d.get("date_publication"),
                     d.get("titre"), texte[:6000], sorted(acteurs))))
         except Exception as ex:
-            supa.maj_document(d["id"], statut="erreur", erreur=str(ex)[:500], traite_le=maintenant, fournisseur=fournisseur)
+            _supa("maj document", supa.maj_document, d["id"], statut="erreur", erreur=str(ex)[:500],
+                  traite_le=maintenant, fournisseur=fournisseur)
             stats["erreurs"] += 1
             log.warning("extraction échouée %s : %s", d["url"], str(ex)[:120])
             continue
@@ -116,12 +133,15 @@ def extraire(max_docs: int, acteurs: set[str], tax: dict, idx: dict, fournisseur
             ligne = sch.normaliser_fiche(f, saisi_par=f"auto:{fournisseur}")
             ligne["document_id"] = d["id"]
             lignes.append(ligne)
-        creees = supa.inserer_mesures(lignes)
+        creees = _supa("insertion fiches", supa.inserer_mesures, lignes) if lignes else []
+        if creees is None:
+            stats["erreurs"] += 1
+            continue                      # document laissé 'a_traiter' : il sera repris au prochain lancement
         n = len(creees)
         EXPORT.extend(creees)
         note = f"{len(refus)} fiche(s) refusée(s) : " + " | ".join("; ".join(e) for _, e in refus) if refus else None
-        supa.maj_document(d["id"], statut="traite", nb_fiches=n, erreur=(note or "")[:500] or None,
-                          traite_le=maintenant, fournisseur=fournisseur)
+        _supa("maj document", supa.maj_document, d["id"], statut="traite", nb_fiches=n,
+              erreur=(note or "")[:500] or None, traite_le=maintenant, fournisseur=fournisseur)
         stats["docs_extraits"] += 1
         stats["fiches_creees"] += n
         log.info("%s → %d fiche(s)%s", (d.get("titre") or d["url"])[:70], n, f" ({len(refus)} refusée(s))" if refus else "")
@@ -157,17 +177,23 @@ def main() -> int:
             total["fiches_creees"] = s["fiches_creees"]
             total["erreurs"] += s["erreurs"]
             journal.append(f"extraction : {s}")
-            chemin = ecrire_exports()
-            journal.append(f"export : {len(EXPORT)} fiche(s) → {chemin}")
     except Exception:
         code = 1
         journal.append("ERREUR FATALE :\n" + traceback.format_exc()[-1500:])
         log.error("échec de la tâche", exc_info=True)
     finally:
-        supa.fermer_run(run_id, journal="\n".join(journal), **total)
+        if not args.sans_extraction:
+            try:
+                chemin = ecrire_exports()      # toujours écrit, même après un arrêt en cours de route
+                journal.append(f"export : {len(EXPORT)} fiche(s) → {chemin}")
+                log.info("export : %d fiche(s) → %s", len(EXPORT), chemin)
+            except Exception:
+                log.error("écriture de l'export impossible", exc_info=True)
+        _supa("fermeture du run", supa.fermer_run, run_id, journal="\n".join(journal), **total)
         log.info("bilan : %s", total)
     return code
 
 
 if __name__ == "__main__":
     sys.exit(main())
+
