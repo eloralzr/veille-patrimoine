@@ -54,11 +54,11 @@ def mots_cles_taxonomie(chemin: Path | None = None) -> list[str]:
 
 
 def pertinent(texte: str, mots: list[str], minimum: int = 1, longueur_min: int = 120) -> bool:
-    """Filtre grossier avant appel LLM : longueur et présence de mots-clés patrimoniaux."""
+    """Filtre grossier avant appel LLM : longueur et présence de mots-clés patrimoniaux (en mots entiers)."""
     if not texte or len(texte) < longueur_min:
         return False
     t = texte.lower()
-    return sum(1 for m in mots if m in t) >= minimum
+    return sum(1 for m in mots if re.search(r"(?<!\w)" + re.escape(m) + r"(?!\w)", t)) >= minimum
 
 
 def source_id(*parts: str) -> str:
