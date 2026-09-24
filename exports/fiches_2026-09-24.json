@@ -1,0 +1,136 @@
+[
+  {
+    "id": "de2cf610-8b70-4e13-9622-d393eb8eee39",
+    "acteur_id": "retailleau-bruno",
+    "theme_id": "protection",
+    "sous_theme_id": "retraite",
+    "mots_cles": [
+      "âge de départ",
+      "réforme des retraites",
+      "décote",
+      "espérance de vie",
+      "pension"
+    ],
+    "titre": "Report de l'âge légal de retraite à 65 ans",
+    "resume": "Bruno Retailleau propose de reculer l'âge légal de départ à la retraite à taux plein à 65 ans, tout en autorisant un départ dès 63 ans assorti d'une décote de 7 % par an. L'objectif est de réaliser 40 milliards d'euros d'économies sur cinq ans pour préserver le système par répartition. La mesure prévoit aussi une indexation de l'âge de départ sur l'espérance de vie.",
+    "citation": "partir dès 63 ans, s'ils le souhaitent, avec une décote de 7% par an.",
+    "nature": "engagement",
+    "impact_client": "Allongement de la durée d'activité requise pour une retraite à taux plein et minoration des pensions en cas de départ anticipé à 63 ans.",
+    "url_source": "https://www.europe1.fr/politique/retraite-les-propositions-de-bruno-retailleau-pour-sauver-le-systeme-par-repartition-1098734",
+    "date_source": "2026-09-23",
+    "confiance": "moyen",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-24T09:26:19.086144+00:00"
+  },
+  {
+    "id": "2be7bdb8-0c98-44f2-b340-949b2afc0621",
+    "acteur_id": "retailleau-bruno",
+    "theme_id": "protection",
+    "sous_theme_id": "retraite",
+    "mots_cles": [
+      "capitalisation",
+      "réforme des retraites",
+      "jeunes actifs",
+      "pension"
+    ],
+    "titre": "Instauration de 30 % de capitalisation pour les jeunes actifs",
+    "resume": "Bruno Retailleau souhaite introduire une part de capitalisation allant jusqu'à 30 % au sein du système de retraite obligatoire. Cette disposition ciblerait prioritairement les jeunes actifs afin de diversifier le financement de leurs futures pensions.",
+    "citation": "instaurer jusqu'à 30% de capitalisation dans le système de retraite pour les jeunes actifs.",
+    "nature": "engagement",
+    "impact_client": "Diversification des droits à la retraite des jeunes actifs vers un volet de capitalisation en complément du régime par répartition.",
+    "url_source": "https://www.europe1.fr/politique/retraite-les-propositions-de-bruno-retailleau-pour-sauver-le-systeme-par-repartition-1098734",
+    "date_source": "2026-09-23",
+    "confiance": "moyen",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-24T09:26:19.086144+00:00"
+  },
+  {
+    "id": "944eb335-ff35-40d7-86e1-54b637f02321",
+    "acteur_id": "retailleau-bruno",
+    "theme_id": "protection",
+    "sous_theme_id": "retraite",
+    "mots_cles": [
+      "âge de départ",
+      "réforme des retraites",
+      "décote",
+      "taux plein",
+      "espérance de vie"
+    ],
+    "titre": "Départ à la retraite à 63 ans et taux plein à 65 ans",
+    "resume": "Bruno Retailleau propose de fixer l'âge minimal de départ à la retraite à 63 ans, tout en appliquant une décote de 7 % par an en cas de départ avant 65 ans. Le taux plein automatique serait accordé à 65 ans, quel que soit le nombre de trimestres validés, mais cet âge évoluerait en fonction de l'espérance de vie. L'objectif affiché est de générer 40 milliards d'euros d'économies sur cinq ans.",
+    "citation": "L’âge minimal de départ, c’est 63 ans",
+    "nature": "engagement",
+    "impact_client": "Les assurés devront supporter une forte décote en cas de départ entre 63 et 65 ans, mais obtiendront le taux plein à 65 ans.",
+    "url_source": "https://www.gentside.com/news/politique/art121229-retraite-63-ans-ou-taux-plein-65-ans-bruno-retailleau-veut-laisser-le-choix-avec-une.html",
+    "date_source": "2026-09-23",
+    "confiance": "moyen",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-24T09:26:35.414207+00:00"
+  },
+  {
+    "id": "1824fb56-e817-4cd0-91a1-638f830cd143",
+    "acteur_id": "retailleau-bruno",
+    "theme_id": "protection",
+    "sous_theme_id": "retraite",
+    "mots_cles": [
+      "capitalisation",
+      "réforme des retraites",
+      "nouveaux actifs",
+      "pension"
+    ],
+    "titre": "Part de capitalisation de 25 à 30 % pour les nouveaux actifs",
+    "resume": "Le candidat souhaite introduire un volet de retraite par capitalisation réservé aux nouveaux entrants sur le marché du travail. Cette part d'épargne représenterait à terme 25 % à 30 % de la pension globale des futurs actifs. Les fonds collectés serviraient également à financer les entreprises françaises.",
+    "citation": "un quart, soit 25 à 30 % des retraites des jeunes qui rentrent sur le marché du travail",
+    "nature": "engagement",
+    "impact_client": "Aucun impact pour les retraités actuels, mais création d'un pilier par capitalisation obligatoire ou guidé pour les jeunes générations d'actifs.",
+    "url_source": "https://www.gentside.com/news/politique/art121229-retraite-63-ans-ou-taux-plein-65-ans-bruno-retailleau-veut-laisser-le-choix-avec-une.html",
+    "date_source": "2026-09-23",
+    "confiance": "moyen",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-24T09:26:35.414207+00:00"
+  },
+  {
+    "id": "f2512ea8-8712-47ce-87bd-7b94ba9e40b3",
+    "acteur_id": "royal-segolene",
+    "theme_id": "protection",
+    "sous_theme_id": "retraite",
+    "mots_cles": [
+      "retraite",
+      "pension",
+      "indexation",
+      "pouvoir d'achat"
+    ],
+    "titre": "Opposition à la sous-indexation des pensions de retraite",
+    "resume": "Ségolène Royal s'oppose fermement aux propositions de sous-indexation des pensions de retraite par rapport à l'inflation figurant dans le projet de budget. Elle dénonce la mise à contribution des retraités dans un contexte de baisse du pouvoir d'achat.",
+    "citation": "le gouvernement doit arrêter de menacer les gens sur les retraites, ça suffit",
+    "nature": "reaction",
+    "impact_client": "Maintien attendu de la revalorisation intégrale des pensions sur l'inflation en cas d'abandon de la mesure.",
+    "url_source": "https://www.bfmtv.com/politique/elections/presidentielle/on-vit-correctement-avec-2-000-euros-par-mois-segolene-royal-qualifie-de-choquants-les-propos-de-roland-lescure_AV-202609240312.html",
+    "date_source": "2026-09-24",
+    "confiance": "eleve",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-24T09:29:25.757295+00:00"
+  },
+  {
+    "id": "84ea41da-081f-438b-86be-64e390a89d0f",
+    "acteur_id": "royal-segolene",
+    "theme_id": "fiscalite",
+    "sous_theme_id": "ifi_fortune",
+    "mots_cles": [
+      "ISF",
+      "impôt sur la fortune",
+      "patrimoine",
+      "justice fiscale"
+    ],
+    "titre": "Appel au rétablissement de l'impôt de solidarité sur la fortune",
+    "resume": "Ségolène Royal demande le rétablissement de l'ISF pour financer les exigences budgétaires. Elle critique le choix du gouvernement de ne pas taxer les grands patrimoines tout en sollicitant les retraités.",
+    "citation": "ne pas remettre l'impôt de solidarité sur la fortune (ISF) et vous en prendre aux retraités",
+    "nature": "reaction",
+    "impact_client": "Risque de réintégration des actifs financiers dans le barème d'un impôt sur la fortune élargi.",
+    "url_source": "https://www.bfmtv.com/politique/elections/presidentielle/on-vit-correctement-avec-2-000-euros-par-mois-segolene-royal-qualifie-de-choquants-les-propos-de-roland-lescure_AV-202609240312.html",
+    "date_source": "2026-09-24",
+    "confiance": "eleve",
+    "saisi_par": "auto:gemini",
+    "cree_le": "2026-09-24T09:29:25.757295+00:00"
+  }
+]
