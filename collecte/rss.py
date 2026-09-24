@@ -1,7 +1,11 @@
-"""Collecte RSS : flux des acteurs (table sources) + flux presse Google Actualités (data/requetes_presse.csv).
+"""Collecte RSS : flux des acteurs (table sources) + flux presse (data/requetes_presse.csv).
 
 Chaque entrée nouvelle devient une ligne de la table documents (statut 'a_traiter').
 Le texte complet de l'article est récupéré quand c'est possible (trafilatura) ; sinon on garde le résumé du flux.
+
+Flux de presse généraux (ex. rubrique Politique d'un éditeur) : dans requetes_presse.csv, acteur_id = "*".
+L'acteur est alors détecté dans le titre et le résumé (data/alias_acteurs.csv), et l'entrée n'est gardée que si
+elle cite un acteur connu ET un mot-clé patrimonial (taxonomie), en mots entiers.
 """
 from __future__ import annotations
 
@@ -23,6 +27,11 @@ log = logging.getLogger("collecte.rss")
 ROOT = Path(__file__).resolve().parents[1]
 REQUETES_PRESSE = ROOT / "data" / "requetes_presse.csv"
 DOMAINES_EXCLUS = ROOT / "data" / "domaines_exclus.txt"
+ALIAS_ACTEURS = ROOT / "data" / "alias_acteurs.csv"
+TAXONOMIE = ROOT / "data" / "taxonomie.yaml"
+ACTEUR_A_DETECTER = "*"
+MOTS_GENERAUX = ["patrimoine", "fiscalité", "impôt", "impôts", "taxe", "héritage", "succession", "successions",
+                 "donation", "donations", "retraite", "retraites", "épargne"]
 
 
 def _charger_exclus() -> set[str]:
@@ -75,7 +84,7 @@ def resoudre_url(url: str) -> str:
     try:
         from googlenewsdecoder import gnewsdecoder
         res = gnewsdecoder(url, interval=1)
-        if isinstance(res, dict) and res.get("status") and res.get("decoded_url"):
+        if isinstance(res, dict) and (res.get("status") or res.get("success")) and res.get("decoded_url"):
             return res["decoded_url"]
         log.warning("décodage Google News refusé %s : %s", url[:80], str((res or {}).get("message", ""))[:200])
     except Exception as ex:
@@ -117,6 +126,62 @@ def _nettoyer_html(s: str) -> str:
     s = re.sub(r"<[^>]+>", " ", s or "")
     return re.sub(r"\s+", " ", s).strip()
 
+
+# ---------------------------------------------------------------- flux généraux : détection de l'acteur
+
+def _charger_alias(acteurs_valides: set[str]) -> list[tuple[str, str]]:
+    if not ALIAS_ACTEURS.exists():
+        log.warning("alias des acteurs absent (%s) : les flux généraux seront ignorés", ALIAS_ACTEURS)
+        return []
+    with open(ALIAS_ACTEURS, encoding="utf-8", newline="") as f:
+        return [(r["acteur_id"].strip(), r["alias"].strip()) for r in csv.DictReader(f)
+                if (r.get("alias") or "").strip() and (r.get("acteur_id") or "").strip() in acteurs_valides]
+
+
+def _motif(mots: list[str]):
+    mots = sorted({m.strip() for m in mots if m and m.strip()}, key=len, reverse=True)
+    if not mots:
+        return None
+    return re.compile(r"(?<!\w)(?:" + "|".join(re.escape(m) for m in mots) + r")(?!\w)", re.I)
+
+
+def _motif_patrimoine():
+    mots = list(MOTS_GENERAUX)
+    try:
+        import yaml
+        tax = yaml.safe_load(TAXONOMIE.read_text(encoding="utf-8"))
+        for th in tax.get("themes", []):
+            for st in th.get("sous_themes", []):
+                mots.extend(st.get("mots_cles", []))
+    except Exception as ex:
+        log.warning("taxonomie illisible pour le filtre presse : %s", ex)
+    return _motif(mots)
+
+
+def _detecter_acteur(texte: str, alias: list[tuple[str, str]]) -> str | None:
+    """Acteur le plus cité (en mots entiers) dans le texte, ou None."""
+    comptes: dict[str, int] = {}
+    for acteur_id, a in alias:
+        n = len(re.findall(r"(?<!\w)" + re.escape(a) + r"(?!\w)", texte, flags=re.I))
+        if n:
+            comptes[acteur_id] = comptes.get(acteur_id, 0) + n
+    return max(comptes, key=comptes.get) if comptes else None
+
+
+def _attribuer(docs: list[dict], alias, motif_pat, stats: dict) -> list[dict]:
+    gardes = []
+    for d in docs:
+        t = f"{d.get('titre', '')} {d.get('texte', '')}"
+        acteur = _detecter_acteur(t, alias)
+        if not acteur or not motif_pat or not motif_pat.search(t):
+            stats["docs_hors_sujet"] = stats.get("docs_hors_sujet", 0) + 1
+            continue
+        d["acteur_id"] = acteur
+        gardes.append(d)
+    return gardes
+
+
+# ---------------------------------------------------------------- lecture des flux
 
 def _lire_flux(url_flux: str, acteur_id: str, source_id: str | None, source_type: str,
                fiabilite: str, depuis: datetime) -> list[dict]:
@@ -164,15 +229,21 @@ def collecter(acteurs_valides: set[str], recuperer_texte: bool = True) -> dict:
         if s.get("url") and s["acteur_id"] in acteurs_valides:
             flux.append((s["url"], s["acteur_id"], s["source_id"], "rss", s.get("fiabilite") or "primaire"))
     for r in _charger_requetes_presse():
-        if r["acteur_id"] in acteurs_valides:
+        if r["acteur_id"] == ACTEUR_A_DETECTER:
+            flux.append((r["url_rss"], ACTEUR_A_DETECTER, None, "presse", "secondaire"))
+        elif r["acteur_id"] in acteurs_valides:
             flux.append((r["url_rss"], r["acteur_id"], None, "presse", "secondaire"))
 
-    stats = {"flux_lus": 0, "docs_vus": 0, "docs_nouveaux": 0, "flux_en_erreur": 0}
+    alias = _charger_alias(acteurs_valides)
+    motif_pat = _motif_patrimoine()
+    stats = {"flux_lus": 0, "docs_vus": 0, "docs_nouveaux": 0, "flux_en_erreur": 0, "docs_hors_sujet": 0}
     candidats: list[dict] = []
     for url, acteur_id, source_id, source_type, fiab in flux:
         try:
             docs = _lire_flux(url, acteur_id, source_id, source_type, fiab, depuis)
             stats["flux_lus"] += 1
+            if acteur_id == ACTEUR_A_DETECTER:
+                docs = _attribuer(docs, alias, motif_pat, stats)
             stats["docs_vus"] += len(docs)
             candidats.extend(docs)
         except Exception as ex:
